@@ -7,3 +7,5 @@ dist/
 *.tar.gz
 *.log
 .DS_Store
+tmp/
+__pycache__/

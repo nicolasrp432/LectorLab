@@ -1,34 +1,34 @@
-# Comprobaciones de la landing
+# Comprobaciones de LectorLab · Peter y producto piloto
 
-## Superadas
+## Verificado en esta edición
 
-- Sintaxis de los tres módulos JavaScript.
-- Compilación de producción con Vite.
-- Estructura HTML: anidamiento, IDs únicos, anclas, panel de pestañas e imágenes con texto alternativo.
-- Simulación de las interacciones del cuaderno: cambio de ruta, notas independientes, siete días, progreso, exportación, guardado opcional, recuperación y borrado con cancelación.
-- Contraste calculado para los pares principales:
+- Sintaxis de los módulos JavaScript y compilación de producción con Vite.
+- Pruebas existentes del cuaderno: cambio de rutas, notas independientes, siete días, progreso, exportación, guardado opcional, recuperación y borrado con cancelación.
+- Revisión visual en navegador a 1363 px y en marcos de 390 y 320 px (anchos de contenido de 375 y 305 px al descontar la barra de desplazamiento).
+- Peter visible en portada con transparencia; el wordmark LectorLab permanece. Segunda pose cargada como guía del cuaderno.
+- Cambio Peter/libro: estado visual y accesible actualizado; fallback ilustrado visible sin WebGL.
+- Nuevos botones Con Peter / Libro 3D: 44 px de alto. CTA principal móvil: 54 px. Sin recortes en titulares, botones, oferta ni cuaderno a los anchos revisados.
+- Apertura del temario del kit y acceso al cuaderno desde la oferta.
+- En navegador móvil: escribir una nota, marcar el día, pasar al siguiente y volver conserva la respuesta y muestra 1 de 7 días completados. Guardado persistente desactivado durante QA.
+- Pausa manual: contenido visible y navegación sin desplazamiento suave obligatorio.
+- PDF de 31 páginas: renderizado completo y revisión visual de todas las páginas en contacto, con revisión ampliada de ejercicios. 21 sesiones presentes y numeradas, fuentes incrustadas, hojas sin texto cortado.
+- Activos nuevos WebP con alpha real; 132 y 119 KiB aproximadamente.
+
+## Contraste calculado
 
 | Texto / fondo | Ratio |
 | --- | --- |
 | Tinta / papel | 16,85:1 |
 | Tinta / lima | 16,29:1 |
 | Tinta / rojo | 4,98:1 |
-| Texto secundario / papel | 6,67:1 |
-| Texto secundario claro / tinta | 10,65:1 |
+| Secundario claro / tinta | 10,65:1 |
 
-Todos superan 4,5:1. Los textos decorativos grandes y los estados deshabilitados no se presentan como una auditoría completa WCAG.
+Estos pares superan 4,5:1. La comprobación no equivale a una auditoría completa WCAG.
 
-## Adaptación prevista en código
+## Límites de la revisión
 
-- Menú compacto y portada en una columna en móvil.
-- Controles principales de al menos 44 px.
-- Sin secciones fijadas por scroll por debajo de 1024 px.
-- Fuentes locales, imagen WebP y módulo Three.js separado.
-- Alternativa visual sin WebGL y sin movimiento obligatorio.
-- Pausa manual y soporte de `prefers-reduced-motion`.
+WebGL está desactivado en el navegador de pruebas: el renderizado y la apertura reales de la escena Three.js no pudieron verificarse aquí. Sí se verificó el fallback CSS y que la interfaz no queda bloqueada. El módulo se carga solo al pedir la vista del libro.
 
-## Pendiente de comprobar en navegador real
+No se han realizado pruebas con usuarios, auditoría completa de accesibilidad, medición de conversión, test de compra/entrega o prueba de rentabilidad. No hay checkout. El PDF es imprimible y admite anotación mediante aplicaciones compatibles; no contiene campos AcroForm.
 
-La conexión al navegador local ha fallado y el navegador alternativo ha bloqueado la URL del servidor de previsualización. No se ha completado una inspección visual de escritorio/móvil ni una medición real de rendimiento o accesibilidad.
-
-Revisar al abrir el proyecto: 320, 375, 768, 1024 y 1440 px; móvil horizontal; zoom al 200 %; navegación por teclado; movimiento reducido; apertura/cierre del libro; alternancia de animaciones y exportación del cuaderno. Estos casos no deben considerarse aprobados solo por las pruebas simuladas.
+La maquetación responsive se revisó en un navegador remoto y marcos estrechos, no en un dispositivo físico. Quedan por ampliar las pruebas de zoom 200 %, lectores de pantalla y dispositivos con WebGL activo.

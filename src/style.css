@@ -2204,3 +2204,53 @@ dialog p {
 @media (max-width: 420px) {
   .site-header > .btn { display: none; }
 }
+
+/* Peter belongs to LectorLab; the wordmark stays independent. */
+html[data-motion="off"] { scroll-behavior: auto; }
+.visual-switch { display: flex; align-self: flex-end; gap: 4px; z-index: 5; border: 1px solid var(--ink); border-radius: 30px; padding: 4px; margin-bottom: 4px; }
+.visual-switch button { min-height: 44px; padding: 9px 17px; border-radius: 24px; font-size: 12px; }
+.visual-switch button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.hero-visual { display: grid; grid-template-columns: 1fr; grid-template-rows: auto 1fr auto; }
+.visual-switch { grid-area: 1 / 1; justify-self: end; }
+.hero-visual .scene, .peter-stage { grid-area: 2 / 1; }
+.scene-toolbar { grid-area: 3 / 1; }
+.peter-stage { position: relative; width: 100%; min-height: 560px; z-index: 2; display: flex; align-items: center; justify-content: center; }
+.hero-peter { width: 100%; max-width: 560px; height: auto; aspect-ratio: 1; object-fit: contain; filter: drop-shadow(0 24px 20px #12121216); }
+.peter-intro { position: absolute; left: 2%; top: 5%; font-size: 10px; line-height: 1.6; z-index: 3; transform: rotate(-8deg); }
+.peter-intro i { font: italic 29px var(--serif); }
+.hero-visual[data-view="peter"] .scene { opacity: 0; visibility: hidden; pointer-events: none; }
+.hero-visual[data-view="book"] .peter-stage { opacity: 0; visibility: hidden; pointer-events: none; }
+.hero-visual[data-view="peter"] #open-book { display: none; }
+.hero-visual[data-view="peter"] .note-idea { display: none; }
+.hero-visual[data-view="peter"] .note-money { top: 16%; right: -2%; z-index: 3; font-size: 10px; }
+.peter-portrait { background: var(--paper); overflow: visible; }
+.peter-portrait img { object-fit: contain; padding: 4%; }
+.peter-guide { display: flex; gap: 10px; align-items: center; margin: -10px 0 26px; padding-bottom: 15px; border-bottom: 1px solid var(--ink); }
+.peter-guide img { width: 82px; height: 98px; object-fit: contain; flex-shrink: 0; }
+.peter-guide p { font-size: 12px; line-height: 1.6; margin: 0; }
+.kit-inside { border-top: 1px solid #73746a; margin-top: 24px; padding-top: 10px; }
+.kit-inside summary { min-height: 48px; display: flex; align-items: center; justify-content: space-between; font-size: 15px; gap: 20px; }
+.kit-inside summary::after { content: '+'; font-size: 22px; }
+.kit-inside[open] summary::after { content: '−'; }
+.kit-inside ol { padding-left: 20px; }
+.kit-inside li { display: list-item; padding: 10px 0; border: 0; color: #deded3; line-height: 1.6; }
+.kit-inside p { font-size: 13px; color: #c4c4b9; }
+@media (min-width: 1500px) { .peter-stage { min-height: 640px; } }
+@media (max-width: 1100px) { .peter-stage { min-height: 480px; } .hero-visual[data-view="peter"] .note-money { top: 17%; right: 0; } }
+@media (max-width: 760px) {
+  .hero-visual { margin-top: 30px; }
+  .peter-stage { min-height: 390px; }
+  .hero-peter { max-width: 390px; width: 94%; }
+  .peter-intro { top: 4%; left: 0; }
+  .peter-intro i { font-size: 25px; }
+  .visual-switch { justify-self: center; margin-bottom: 12px; }
+  .visual-switch button { font-size: 12px; padding: 9px 18px; }
+  .hero-visual[data-view="peter"] .note-money { top: 26%; right: -1%; font-size: 9px; padding: 8px 10px; }
+  .scene-toolbar { min-height: 50px; }
+  .scene-toolbar > span { font-size: 9px; max-width: 200px; }
+  .peter-guide { max-width: 360px; }
+  .peter-guide img { width: 72px; height: 90px; }
+  .peter-guide p { font-size: 14px; }
+  .peter-stamp { top: 280px; }
+}
+@media (max-width: 360px) { .peter-stage { min-height: 330px; } }

@@ -13,6 +13,25 @@ let context;
 let scene;
 let bookOpen = false;
 let loadId = 0;
+let bookRequested = false;
+const visual = document.querySelector(".hero-visual");
+const showPeter = document.getElementById("show-peter");
+const showBook = document.getElementById("show-book");
+
+function setVisual(view) {
+  visual.dataset.view = view;
+  showPeter.setAttribute("aria-pressed", String(view === "peter"));
+  showBook.setAttribute("aria-pressed", String(view === "book"));
+  document.getElementById("peter-stage").setAttribute("aria-hidden", String(view !== "peter"));
+  document.getElementById("book-scene").setAttribute("aria-hidden", String(view !== "book"));
+  if (view === "book" && !bookRequested) {
+    bookRequested = true;
+    buildMotion();
+  }
+  if (!stopped) gsap.fromTo(view === "peter" ? ".hero-peter" : ".scene", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, clearProps: "all" });
+}
+showPeter.addEventListener("click", () => setVisual("peter"));
+showBook.addEventListener("click", () => setVisual("book"));
 
 function buildMotion() {
   context?.revert();
@@ -111,6 +130,12 @@ function buildMotion() {
         scrub: 0.8,
       },
     });
+    gsap.to(".hero-peter", {
+      y: 24,
+      rotate: 2,
+      ease: "none",
+      scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.8 },
+    });
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1024px)", () => {
       const tl = gsap.timeline({
@@ -145,7 +170,7 @@ function buildMotion() {
     });
     return () => mm.revert();
   });
-  if (!navigator.connection?.saveData) {
+  if (bookRequested && !navigator.connection?.saveData) {
     openBook.disabled = true;
     openBook.textContent = "Cargando libro…";
     const id = loadId;
@@ -180,7 +205,7 @@ function buildMotion() {
         openBook.textContent = "Vista ilustrada";
         openBook.disabled = true;
       });
-  } else {
+  } else if (bookRequested) {
     openBook.textContent = "Ahorro de datos activo";
     openBook.disabled = true;
   }
