@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#d7ff3f" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      name="description"
+      content="Ideas de libros para cambiar cómo miras tu dinero, tus relaciones y tu atención. Elige una pregunta y prueba gratis tu primera ruta de conocimiento aplicado."
+    />
+    <title>LectorLab — Lo que sabes cambia tu juego.</title>
+    <link rel="icon" href="/assets/mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/SpaceGrotesk.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <div class="reading-progress" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="LectorLab, inicio"
+        >lectorlab<span class="brand-star" aria-hidden="true">✳</span></a
+      >
+      <nav class="desktop-nav" aria-label="Principal">
+        <a href="#rutas">Las preguntas</a><a href="#metodo">La idea</a
+        ><a href="#kit">El kit</a>
+      </nav>
+      <a class="btn btn-small" href="#laboratorio"
+        >Pruébalo gratis <span aria-hidden="true">↗</span></a
+      >
+      <details class="mobile-nav">
+        <summary>Menú +</summary>
+        <nav aria-label="Móvil">
+          <a href="#rutas">Las preguntas</a><a href="#metodo">La idea</a
+          ><a href="#kit">El kit</a><a href="#laboratorio">Pruébalo gratis</a>
+        </nav>
+      </details>
+    </header>
+    <main id="contenido">
+      <section class="hero section-pad" id="inicio">
+        <div class="hero-top">
+          <p class="eyebrow">
+            <span class="status-dot"></span> CONOCIMIENTO PARA LA VIDA REAL
+          </p>
+          <span class="eyebrow hero-edition">VOL. 01 / ABRE TU MENTE</span>
+        </div>
+        <div class="hero-layout">
+          <div class="hero-copy">
+            <h1>
+              <span>Lo que sabes</span><br /><span>cambia</span><br /><em
+                >tu juego.</em
+              ><span class="headline-star" aria-hidden="true">✳</span>
+            </h1>
+            <p class="hero-lead">
+              Dinero. Relaciones. Atención.<br />Hay ideas en los libros que
+              pueden cambiar<br class="desktop-break" />
+              cómo miras lo que te pasa.
+            </p>
+            <div class="hero-actions">
+              <a href="#rutas" class="btn"
+                >Encuentra tu primera idea <span aria-hidden="true">↗</span></a
+              ><span class="hero-fine"
+                >Una pregunta.<br />Una lectura. Una acción.</span
+              >
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="orbit-ring" aria-hidden="true"></div>
+            <div
+              class="scene"
+              id="book-scene"
+              role="img"
+              aria-label="Un libro verde lima que se abre para descubrir ideas de dinero, relaciones y atención"
+            >
+              <div class="fallback-book" aria-hidden="true">
+                <div class="fallback-cover">
+                  <span>lectorlab / 01</span
+                  ><strong>EL PODER<br />DEL<br />CONOCI-<br />MIENTO.</strong
+                  ><small>ABRE. CUESTIONA. PRUEBA.</small>
+                </div>
+                <div class="fallback-pages"></div>
+              </div>
+            </div>
+            <span class="float-note note-money" aria-hidden="true"
+              >DINERO ≠ ESTATUS</span
+            ><span class="float-note note-idea" aria-hidden="true"
+              >Una idea puede<br /><i>moverlo todo.</i></span
+            >
+            <div class="scene-toolbar">
+              <span>EL CONOCIMIENTO TIENE OTRA CARA.</span
+              ><button id="open-book" type="button" aria-pressed="false">
+                Abre el libro <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="hero-bottom">
+          <span
+            ><span class="mini-star" aria-hidden="true">✳</span> Para curiosos,
+            no para expertos.</span
+          ><a href="#rutas">TIRA DEL HILO <span aria-hidden="true">↓</span></a
+          ><span>EL PODER DE ENTENDER / LECTORLAB</span>
+        </div>
+      </section>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>LEE MENOS EN AUTOMÁTICO.</span><i>✳</i
+          ><span>PIENSA MÁS POR TU CUENTA.</span><i>✳</i
+          ><span>LEE MENOS EN AUTOMÁTICO.</span><i>✳</i>
+        </div>
+      </div>
+      <section class="questions section-pad" id="rutas">
+        <div class="section-top">
+          <p class="eyebrow">01 / ALGO TE ESTÁ DANDO VUELTAS</p>
+          <span class="section-index">[ ELIGE TU PREGUNTA ]</span>
+        </div>
+        <div class="section-heading">
+          <h2>
+            No necesitas<br />otro consejo.<br /><em
+              >Necesitas una buena pregunta.</em
+            >
+          </h2>
+          <p>
+            No hace falta empezar por un libro.<br />Empieza por algo que
+            quieras entender.
+          </p>
+        </div>
+        <div class="route-tabs" role="tablist" aria-label="Temas de lectura">
+          <button
+            role="tab"
+            id="tab-money"
+            aria-controls="route-panel"
+            aria-selected="true"
+            data-route="money"
+          >
+            <span class="tab-num">01</span
+            ><span>¿Lo quieres o quieres<br />que lo vean?</span
+            ><span class="tab-topic">DINERO</span
+            ><span aria-hidden="true">↗</span></button
+          ><button
+            role="tab"
+            id="tab-relations"
+            aria-controls="route-panel"
+            aria-selected="false"
+            tabindex="-1"
+            data-route="relations"
+          >
+            <span class="tab-num">02</span
+            ><span>¿Qué necesitas<br />poder decir?</span
+            ><span class="tab-topic">RELACIONES Y DESEO</span
+            ><span aria-hidden="true">↗</span></button
+          ><button
+            role="tab"
+            id="tab-attention"
+            aria-controls="route-panel"
+            aria-selected="false"
+            tabindex="-1"
+            data-route="attention"
+          >
+            <span class="tab-num">03</span
+            ><span>¿Qué puedes hacer<br />un poco más fácil?</span
+            ><span class="tab-topic">ATENCIÓN Y HÁBITOS</span
+            ><span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <div
+          class="route-panel"
+          id="route-panel"
+          role="tabpanel"
+          aria-labelledby="tab-money"
+          tabindex="0"
+        >
+          <div class="book-scene">
+            <div class="editorial-book" aria-hidden="true">
+              <span class="book-publisher">UNA LECTURA PARA EXPLORAR / 01</span
+              ><span id="book-title">La psicología<br />del dinero</span>
+              <div class="book-line"></div>
+              <span id="book-author">MORGAN HOUSEL</span><i>LL.</i>
+            </div>
+            <p class="cover-note">
+              Interpretación gráfica. No es la portada editorial.
+            </p>
+          </div>
+          <div class="route-copy">
+            <p id="route-label" class="eyebrow">
+              RUTA 01 · DINERO CON CRITERIO
+            </p>
+            <h3 id="route-question">¿Lo quieres o quieres<br />que lo vean?</h3>
+            <p id="route-description">
+              Una lectura para explorar tu relación con el dinero y las
+              expectativas que pones en él.
+            </p>
+            <div class="try-box">
+              <span class="eyebrow">PON LA IDEA A PRUEBA</span>
+              <p id="route-exercise">
+                Piensa en una compra reciente. Si nadie pudiera enterarse de que
+                la tienes, ¿la seguirías queriendo?
+              </p>
+            </div>
+            <div class="route-links">
+              <button id="use-route" class="btn">
+                Llévala al cuaderno <span aria-hidden="true">↗</span></button
+              ><a
+                id="book-link"
+                class="text-link"
+                href="https://www.planetadelibros.com/libro-la-psicologia-del-dinero/334390?soporte=336728"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Libro y autor ↗</a
+              >
+            </div>
+            <p class="fine" id="route-limit">
+              Pregunta original de LectorLab; no es una cita del autor ni
+              asesoramiento financiero. Libro no incluido.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="method-section" id="metodo">
+        <div class="method-frame section-pad">
+          <div class="section-top">
+            <p class="eyebrow">02 / DEJA DE COLECCIONAR SUBRAYADOS</p>
+            <span class="section-index">[ HAZ ALGO CON ESA IDEA ]</span>
+          </div>
+          <div class="method-layout">
+            <div class="method-left">
+              <h2>Una buena idea<br />no acaba<br /><em>en la página.</em></h2>
+              <div class="method-object" aria-hidden="true">
+                <div class="note-sheet">
+                  <span>MI PRÓXIMA IDEA / LL.</span
+                  ><strong
+                    >¿Y esto<br />qué cambia<br /><i>en mi vida?</i></strong
+                  ><span class="note-arrow">↗</span>
+                </div>
+                <span class="method-scribble">Dale la vuelta.</span>
+              </div>
+            </div>
+            <div class="method-right">
+              <article class="method-step" data-step="0">
+                <span>01 /</span>
+                <h3>Haz una pregunta.</h3>
+                <p>
+                  Elige algo de tu vida que quieras entender. Que sea concreto.
+                  Que sea tuyo.
+                </p>
+                <blockquote>«¿Por qué compro cosas que no uso?»</blockquote>
+              </article>
+              <article class="method-step" data-step="1">
+                <span>02 /</span>
+                <h3>Abre una lectura.</h3>
+                <p>
+                  Busca una idea, escríbela con tus palabras y pregúntate dónde
+                  podría fallar.
+                </p>
+                <blockquote>«¿Esto es una prueba o una opinión?»</blockquote>
+              </article>
+              <article class="method-step" data-step="2">
+                <span>03 /</span>
+                <h3>Mueve algo pequeño.</h3>
+                <p>
+                  Diseña una prueba sencilla. Observa qué pasó y qué todavía no
+                  puedes concluir.
+                </p>
+                <blockquote>«¿Qué decisión entiendo mejor ahora?»</blockquote>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="kit-section section-pad" id="kit">
+        <div class="section-top">
+          <p class="eyebrow">03 / EL CONOCIMIENTO NECESITA UN PLAN</p>
+          <span class="pill">EN CONSTRUCCIÓN</span>
+        </div>
+        <div class="kit-layout">
+          <div class="kit-visual" aria-hidden="true">
+            <div class="kit-label">
+              PRIMERA RUTA<br />DINERO CON CRITERIO <span>↘</span>
+            </div>
+            <div class="kit-book">
+              <div class="kit-spine"></div>
+              <span>lectorlab / kit 01</span>
+              <h3>De la idea<br />a la<br /><em>acción.</em></h3>
+              <div class="kit-bottom">
+                <span>UNA DECISIÓN<br />MÁS TUYA.</span
+                ><strong>21<span>DÍAS</span></strong>
+              </div>
+            </div>
+            <span class="kit-sticker"
+              >NO MÁS<br />«LO GUARDO<br />PARA LUEGO».</span
+            >
+          </div>
+          <div class="kit-copy">
+            <h2>
+              Todo lo que<br />necesitas para<br /><em>darle una vuelta.</em>
+            </h2>
+            <p>
+              Estamos creando un cuaderno de 21 días para que una lectura se
+              convierta en una pregunta, una prueba y una decisión propia.
+            </p>
+            <ul>
+              <li><span>01</span> Ejercicios originales, paso a paso</li>
+              <li>
+                <span>02</span> Una ficha para elegir y contrastar lecturas
+              </li>
+              <li><span>03</span> Un cuaderno que puedes volver a usar</li>
+            </ul>
+            <div class="price">
+              <strong>19 €</strong>
+              <p>
+                Precio de prueba propuesto.<br />La compra todavía no está
+                abierta.
+              </p>
+            </div>
+            <a class="btn btn-lime" href="#laboratorio"
+              >Prueba gratis los primeros 7 días
+              <span aria-hidden="true">↗</span></a
+            >
+            <p class="fine">
+              Libro por separado. No promete ingresos ni resultados personales.
+              Primero probamos su utilidad contigo.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="lab section-pad" id="laboratorio">
+        <div class="section-top">
+          <p class="eyebrow">04 / TU TURNO</p>
+          <span class="pill pill-outline">GRATIS · SIN REGISTRO</span>
+        </div>
+        <div class="section-heading">
+          <h2>Deja de guardarlo.<br /><em>Empieza a usarlo.</em></h2>
+          <p>
+            Elige una pregunta. Dedícale diez minutos.<br />Escribe lo que
+            descubras y llévatelo contigo.
+          </p>
+        </div>
+        <div class="workbook">
+          <aside class="workbook-sidebar">
+            <p class="eyebrow">TU CUADERNO</p>
+            <h3>De la idea<br />a la acción.</h3>
+            <label for="topic">Elige tu punto de partida</label
+            ><select id="topic">
+              <option value="money">Dinero con criterio</option>
+              <option value="relations">Relaciones y deseo</option>
+              <option value="attention">Atención y hábitos</option>
+            </select>
+            <div
+              class="day-list"
+              role="group"
+              aria-label="Días de la muestra"
+            ></div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-label="Días completados"
+              aria-valuemin="0"
+              aria-valuemax="7"
+              aria-valuenow="0"
+            >
+              <span id="progress-fill"></span>
+            </div>
+            <p class="fine" id="progress-label">0 de 7 días marcados</p>
+          </aside>
+          <div class="workbook-page">
+            <div class="page-top">
+              <span class="eyebrow" id="day-number">DÍA 01 / 07</span
+              ><span class="notebook-mark">LL /</span>
+            </div>
+            <h3 id="day-title">Empieza con una pregunta.</h3>
+            <p id="day-prompt">
+              Escribe una decisión de consumo que quieras entender. Hazla
+              concreta y bajo tu control.
+            </p>
+            <label for="note" class="eyebrow note-label"
+              >TU RESPUESTA, CON TUS PALABRAS</label
+            ><textarea
+              id="note"
+              rows="6"
+              maxlength="6000"
+              placeholder="Quiero entender por qué…"
+            ></textarea
+            ><label class="check-line"
+              ><input type="checkbox" id="complete" /> He trabajado esta
+              pregunta</label
+            >
+            <div class="notebook-actions">
+              <button id="prev-day" class="outline-button" disabled>
+                ← Anterior</button
+              ><button id="next-day" class="button small">
+                Siguiente día →
+              </button>
+            </div>
+            <div
+              id="workbook-status"
+              class="status"
+              role="status"
+              aria-live="polite"
+            ></div>
+          </div>
+        </div>
+        <div class="notebook-footer">
+          <div>
+            <label class="check-line"
+              ><input type="checkbox" id="remember" /> Guardar mis notas en este
+              navegador</label
+            >
+            <p class="fine">
+              Opcional. No se envían a LectorLab. Exporta una copia antes de
+              borrar datos.
+            </p>
+          </div>
+          <div class="export-actions">
+            <button id="export" class="text-link">Descargar mis notas ↓</button
+            ><button id="reset" class="subtle-link">Borrar cuaderno</button>
+          </div>
+        </div>
+      </section>
+      <section class="peter section-pad" id="peter">
+        <div class="peter-portrait">
+          <img
+            src="/assets/peter-reading.webp"
+            alt="Peter, la nutria lectora de LectorLab, con un libro abierto"
+            width="1254"
+            height="1254"
+            loading="lazy"
+          />
+        </div>
+        <div class="peter-copy">
+          <p class="eyebrow">EL COLEGA QUE SIEMPRE TIENE UN LIBRO</p>
+          <h2>Peter también<br /><em>se lo pregunta.</em></h2>
+          <p>
+            Curioso. Un poco escéptico. Cero respuestas mágicas. Peter nos
+            acompaña para abrir libros, discutir ideas y probar cosas.
+          </p>
+          <p>
+            Detrás de LectorLab está Nicolás, su creador. Peter pone la
+            curiosidad. El criterio lo construimos entre todos.
+          </p>
+          <a href="#rutas" class="text-link"
+            >Vuelve a las preguntas <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <span class="peter-stamp" aria-hidden="true"
+          >SIEMPRE<br />EN MODO<br />CURIOSO.</span
+        >
+      </section>
+      <section class="faq section-pad" id="proyecto">
+        <div>
+          <p class="eyebrow">SIN LETRA PEQUEÑA</p>
+          <h2>Eso que<br /><em>te preguntas.</em></h2>
+        </div>
+        <div class="faq-items">
+          <details>
+            <summary>¿LectorLab vende libros?</summary>
+            <p>
+              Esta propuesta reúne rutas y ejercicios propios para aplicar una
+              lectura. Los libros se obtienen por separado en bibliotecas o
+              canales autorizados. No ofrecemos packs de PDF de terceros.
+            </p>
+          </details>
+          <details>
+            <summary>¿Tengo que leer rápido?</summary>
+            <p>
+              No. La propuesta pone el foco en lo que quieres entender y hacer
+              con una idea. Puedes leer despacio, volver atrás y cuestionar al
+              autor.
+            </p>
+          </details>
+          <details>
+            <summary>¿Qué pasa con mis notas?</summary>
+            <p>
+              Se mantienen en esta sesión. Solo se guardan en este navegador si
+              activas la casilla correspondiente. Puedes descargarlas o
+              borrarlas. No se envían a ningún servidor ni hay seguimiento de
+              uso en esta versión.
+            </p>
+          </details>
+          <details>
+            <summary>¿Puedo comprar ya el kit?</summary>
+            <p>
+              Todavía no. Esta es una edición piloto privada para revisar el
+              proyecto y probar la muestra. El precio de 19 € es una propuesta.
+              El producto, su entrega y las condiciones de venta deben cerrarse
+              antes del lanzamiento.
+            </p>
+          </details>
+          <details>
+            <summary>¿Los libros tienen todas las respuestas?</summary>
+            <p>
+              No. Contienen perspectivas que pueden ser valiosas y también
+              errores o límites. Distinguimos los ejercicios propios de las
+              ideas de cada autor. Leer no sustituye ayuda profesional cuando la
+              situación la requiere.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="closing section-pad">
+        <p class="eyebrow">LA PRÓXIMA IDEA NO SE VA A LEER SOLA.</p>
+        <h2>
+          Abre un libro.<br /><em>Mueve algo.</em
+          ><span aria-hidden="true">↗</span>
+        </h2>
+        <a class="btn" href="#laboratorio"
+          >Abre tu cuaderno gratis <span aria-hidden="true">↗</span></a
+        ><span class="closing-note">SIN PRISAS. CON PREGUNTAS.</span>
+      </section>
+    </main>
+    <footer class="site-footer section-pad">
+      <a class="brand" href="#"
+        >lectorlab<span class="brand-star" aria-hidden="true">✳</span></a
+      ><span>El poder de entender.</span
+      ><span>© 2026 · Edición piloto privada</span
+      ><button id="motion-toggle" type="button" aria-pressed="false">
+        Pausar animaciones
+      </button>
+    </footer>
+    <dialog id="reset-dialog">
+      <form method="dialog">
+        <p class="eyebrow">TU CUADERNO</p>
+        <h3>¿Borrar todas las notas?</h3>
+        <p>
+          Se eliminarán las respuestas y el progreso de las tres rutas de este
+          navegador. Descarga una copia si quieres conservarlas.
+        </p>
+        <div class="dialog-actions">
+          <button class="outline-button" value="cancel">Conservar</button
+          ><button class="btn" value="erase">Borrar cuaderno</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
