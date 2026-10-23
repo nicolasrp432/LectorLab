@@ -9,3 +9,10 @@ dist/
 .DS_Store
 tmp/
 __pycache__/
+
+# Páginas generadas por scripts/generate-pages.mjs (editar las plantillas en scripts/site/)
+/404.html
+/habilidades/
+/tienda/
+/laboratorio/
+/afiliados/

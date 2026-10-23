@@ -5,10 +5,10 @@
   "observability": {
     "enabled": true
   },
-  // Sitio estático: Wrangler sube el resultado de `npm run build` (dist/)
-  // como assets, sin Worker script ni plugin de Vite.
+  // Sitio estático multipágina: Wrangler sube el resultado de `npm run build`
+  // (dist/) como assets, sin Worker script ni plugin de Vite.
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "404-page"
   }
 }

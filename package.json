@@ -1,14 +1,17 @@
 {
   "name": "lectorlab-web",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "pages": "node scripts/generate-pages.mjs",
+    "predev": "npm run pages",
     "dev": "vite --host 0.0.0.0 --port 4173",
+    "prebuild": "npm run pages",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4173",
-    "check": "node --check src/main.js && node --check src/notebook.js && node --check src/scene.js",
-    "test": "node tests/notebook.cjs"
+    "check": "for f in src/*.js src/data/*.js scripts/*.mjs scripts/site/*.mjs; do node --check \"$f\" || exit 1; done",
+    "test": "node tests/notebook.cjs && node tests/catalog.mjs"
   },
   "dependencies": {
     "gsap": "^3.14.2",
