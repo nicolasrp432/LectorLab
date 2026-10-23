@@ -40,12 +40,21 @@ function home() {
             <h1><span>Cualquier</span><br /><span>habilidad</span><br /><span>empieza en</span><br /><em>una página.</em><span class="headline-star" aria-hidden="true">✳</span></h1>
             <p class="hero-lead">Hablar en público. Vender. Negociar. Hasta lanzar un cohete a la Luna. Todo lo que quieres aprender ya lo escribió alguien: te ayudamos a encontrarlo, leerlo mejor y ponerlo en práctica.</p>
             <div class="hero-actions">
-              <a href="#habilidades" class="btn" id="hero-cta">Elige tu habilidad <span aria-hidden="true">↗</span></a>
+              <a href="#habilidades" class="btn btn-lime" id="hero-cta">Elige tu habilidad <span aria-hidden="true">↗</span></a>
               <a href="/tienda/" class="text-link" id="hero-shop">Ver la tienda ↗</a>
+            </div>
+            <div class="hero-peter-badge">
+              <div class="peter-badge-avatar">
+                <img src="/assets/peter-reading-v2.webp" alt="Peter, la nutria de LectorLab" width="80" height="80" fetchpriority="high" />
+              </div>
+              <div class="peter-badge-content">
+                <p class="peter-badge-quote">«Elige una habilidad. Yo te enseño el libro para empezar hoy.»</p>
+                <span class="peter-badge-author">— Peter · aprendiz de LectorLab</span>
+              </div>
             </div>
           </div>
           <div class="skills-visual" id="skills-visual">
-            <div class="skills-scene" id="skills-scene" aria-hidden="true">
+            <div class="skills-scene" id="skills-scene" aria-label="Escena 3D interactiva del libro de habilidades">
               <div class="skills-fallback">
                 <div class="fallback-book">
                   <div class="fallback-cover"><span>lectorlab / 02</span><strong>CUALQUIER<br />HABILIDAD<br />ESTÁ<br />ESCRITA.</strong><small>ELIGE. LEE. PRACTICA.</small></div>
@@ -54,12 +63,18 @@ function home() {
                 <div class="orbit-badges">${badges}</div>
               </div>
             </div>
-            <div class="hero-peter-v2">
-              <img src="/assets/peter-reading-v2.webp" alt="Peter, el personaje de LectorLab, sonríe con su libro abierto" width="1254" height="1254" fetchpriority="high" />
-              <span class="peter-bubble">Elige una.<br /><i>Yo te enseño el libro.</i></span>
+            <div class="scene-hint" aria-hidden="true">
+              <span class="scene-hint-badge">3D INTERACTIVO</span>
+              <span>Gira el libro · Toca los iconos para explorar</span>
             </div>
-            <ul class="skill-chips" aria-label="Habilidades que puedes aprender leyendo">${chips}</ul>
           </div>
+        </div>
+        <div class="hero-skills-strip" aria-label="Explora por habilidad">
+          <div class="strip-header">
+            <span class="eyebrow"><span class="mini-star" aria-hidden="true">✳</span> EXPLORA POR HABILIDAD</span>
+            <span class="strip-count">[ ${skills.length} ÁREAS ]</span>
+          </div>
+          <ul class="skill-chips">${chips}</ul>
         </div>
         <div class="hero-bottom">
           <span><span class="mini-star" aria-hidden="true">✳</span> Para curiosos que quieren aprender haciendo.</span>
@@ -145,7 +160,7 @@ function home() {
           <ul class="check-list">${course.promises.map((p, i) => `<li><span>0${i + 1}</span> ${esc(p)}</li>`).join("")}</ul>
           <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "La compra se abrirá cuando el curso esté listo."}</p></div>
           <div class="master-actions">
-            <a class="btn" href="/tienda/curso-lectura-rapida/" id="master-cta">Conoce el curso <span aria-hidden="true">↗</span></a>
+            <a class="btn btn-lime" href="/tienda/curso-lectura-rapida/" id="master-cta">Conoce el curso <span aria-hidden="true">↗</span></a>
           </div>
           <p class="fine">${esc(course.limits)}</p>
         </div>
@@ -297,13 +312,16 @@ function skillPage(s, idx) {
             </div>
           </div>
           <div class="skill-token-wrap">
-            <div class="skill-token skill-token--${s.color}" data-tilt aria-hidden="true">
-              <span class="skill-token-num">${s.num}</span>
-              ${icon(s.icon, "skill-token-icon")}
-              <span class="skill-token-name">${esc(s.name.toUpperCase())}</span>
+            <div class="skill-scene-3d" id="skill-scene" data-skill-icon="${s.icon}" data-skill-color="${s.color}" aria-label="Tótem 3D interactivo de ${esc(s.name)}">
+              <div class="skill-scene-fallback skill-token skill-token--${s.color}" data-tilt>
+                <span class="skill-token-num">${s.num}</span>
+                ${icon(s.icon, "skill-token-icon")}
+                <span class="skill-token-name">${esc(s.name.toUpperCase())}</span>
+              </div>
             </div>
+            <p class="viewer-hint" aria-hidden="true">Arrastra el tótem para girarlo ↻</p>
             <figure class="peter-quote">
-              <img src="/assets/peter-explaining-v1.webp" alt="" width="1254" height="1254" loading="lazy" />
+              <img src="/assets/peter-explaining-v1.webp" alt="Peter comenta esta habilidad" width="1254" height="1254" loading="lazy" />
               <blockquote>«${esc(s.peter)}»</blockquote>
               <figcaption>— Peter</figcaption>
             </figure>

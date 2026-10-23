@@ -65,14 +65,35 @@ if (grid) {
 
 /* ---------------- Visor 3D del curso ---------------- */
 const courseEl = document.getElementById("course-scene");
-lazyScene(courseEl, async () => {
-  const [{ createCourseViewer }, { gsap }] = await Promise.all([
-    import("./course-viewer.js"),
-    import("gsap"),
-    document.fonts.ready,
-  ]);
-  if (motion.stopped) throw new Error("motion off");
-  const viewer = createCourseViewer(courseEl, gsap);
-  if (!viewer) throw new Error("no webgl");
-  return viewer;
-});
+if (courseEl) {
+  lazyScene(courseEl, async () => {
+    const [{ createCourseViewer }, { gsap }] = await Promise.all([
+      import("./course-viewer.js"),
+      import("gsap"),
+      document.fonts.ready,
+    ]);
+    if (motion.stopped) throw new Error("motion off");
+    const viewer = createCourseViewer(courseEl, gsap);
+    if (!viewer) throw new Error("no webgl");
+    return viewer;
+  });
+}
+
+/* ---------------- Tótem 3D de habilidad ---------------- */
+const skillEl = document.getElementById("skill-scene");
+if (skillEl) {
+  lazyScene(skillEl, async () => {
+    const [{ createSkillTotemScene }, { gsap }] = await Promise.all([
+      import("./skill-scene.js"),
+      import("gsap"),
+      document.fonts.ready,
+    ]);
+    if (motion.stopped) throw new Error("motion off");
+    const icon = skillEl.dataset.skillIcon || "coin";
+    const color = skillEl.dataset.skillColor || "lime";
+    const totem = createSkillTotemScene(skillEl, gsap, { icon, color });
+    if (!totem) throw new Error("no webgl");
+    return totem;
+  });
+}
+

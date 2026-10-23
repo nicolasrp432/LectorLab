@@ -281,9 +281,21 @@ export function createSkillsScene(container, gsap, { skills, onSelect, onHover }
   io.observe(container);
 
   /* ---------------- Interacción ---------------- */
+  const tooltip = document.createElement("div");
+  tooltip.className = "scene-3d-tooltip";
+  tooltip.setAttribute("aria-hidden", "true");
+  tooltip.innerHTML = '<span class="tooltip-title"></span><span class="tooltip-badge">Ver libros ↗</span>';
+  container.append(tooltip);
+
   const raycaster = new THREE.Raycaster();
   const ndc = new THREE.Vector2();
   let hovered = null;
+  let isDragging = false;
+  let lastX = 0;
+  let lastY = 0;
+  let velX = 0;
+  let velY = 0;
+
   function pick(e) {
     const r = renderer.domElement.getBoundingClientRect();
     ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -306,7 +318,7 @@ export function createSkillsScene(container, gsap, { skills, onSelect, onHover }
   }
   function pointer(e) {
     const r = container.getBoundingClientRect();
-    if (matchMedia("(pointer:fine)").matches) {
+    if (!isDragging && matchMedia("(pointer:fine)").matches) {
       gsap.to(pose, {
         x: (e.clientX - r.left) / r.width - 0.5,
         y: (e.clientY - r.top) / r.height - 0.5,
@@ -314,17 +326,75 @@ export function createSkillsScene(container, gsap, { skills, onSelect, onHover }
         overwrite: "auto",
         onUpdate: requestDraw,
       });
+    } else if (isDragging) {
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      velX = dx * 0.004;
+      velY = dy * 0.003;
+      pose.x += velX;
+      pose.y = Math.max(-0.6, Math.min(0.6, pose.y - velY));
+      requestDraw();
     }
+
     const slug = pick(e);
     if (slug !== hovered) {
       hovered = slug;
-      renderer.domElement.style.cursor = slug ? "pointer" : "";
+      renderer.domElement.style.cursor = slug ? "pointer" : isDragging ? "grabbing" : "grab";
       highlight(slug);
       onHover?.(slug);
+
+      if (slug) {
+        const item = skills.find((s) => s.slug === slug);
+        if (item) {
+          tooltip.querySelector(".tooltip-title").textContent = item.name;
+          tooltip.classList.add("is-visible");
+        }
+      } else {
+        tooltip.classList.remove("is-visible");
+      }
+    }
+
+    if (slug && tooltip.classList.contains("is-visible")) {
+      const tx = Math.max(10, Math.min(r.width - 160, e.clientX - r.left - 40));
+      const ty = Math.max(10, e.clientY - r.top - 46);
+      tooltip.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
     }
   }
+
+  function pointerDown(e) {
+    isDragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    velX = 0;
+    velY = 0;
+    renderer.domElement.style.cursor = "grabbing";
+    if (renderer.domElement.setPointerCapture) {
+      renderer.domElement.setPointerCapture(e.pointerId);
+    }
+  }
+
+  function pointerUp(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    renderer.domElement.style.cursor = hovered ? "pointer" : "grab";
+    if (renderer.domElement.releasePointerCapture) {
+      renderer.domElement.releasePointerCapture(e.pointerId);
+    }
+    gsap.to(pose, {
+      x: pose.x + velX * 12,
+      y: Math.max(-0.5, Math.min(0.5, pose.y - velY * 10)),
+      duration: 0.9,
+      ease: "power2.out",
+      onUpdate: requestDraw,
+    });
+  }
+
   function leave() {
+    isDragging = false;
     gsap.to(pose, { x: 0, y: 0, duration: 0.5, overwrite: "auto", onUpdate: requestDraw });
+    tooltip.classList.remove("is-visible");
     if (hovered) {
       hovered = null;
       highlight(null);
@@ -336,7 +406,10 @@ export function createSkillsScene(container, gsap, { skills, onSelect, onHover }
     if (slug) onSelect?.(slug);
   }
   const visibility = () => !document.hidden && requestDraw();
+  renderer.domElement.style.cursor = "grab";
+  renderer.domElement.addEventListener("pointerdown", pointerDown);
   renderer.domElement.addEventListener("pointermove", pointer, { passive: true });
+  renderer.domElement.addEventListener("pointerup", pointerUp);
   renderer.domElement.addEventListener("pointerleave", leave);
   renderer.domElement.addEventListener("click", click);
   document.addEventListener("visibilitychange", visibility);
@@ -360,10 +433,16 @@ export function createSkillsScene(container, gsap, { skills, onSelect, onHover }
       disposed = true;
       cancelAnimationFrame(raf);
       intro.kill();
+      tooltip.remove();
       gsap.killTweensOf(pose);
       icons.forEach((i) => gsap.killTweensOf(i.scale));
       resizeObserver.disconnect();
       io.disconnect();
+      renderer.domElement.removeEventListener("pointerdown", pointerDown);
+      renderer.domElement.removeEventListener("pointermove", pointer);
+      renderer.domElement.removeEventListener("pointerup", pointerUp);
+      renderer.domElement.removeEventListener("pointerleave", leave);
+      renderer.domElement.removeEventListener("click", click);
       document.removeEventListener("visibilitychange", visibility);
       scene.traverse((o) => {
         if (o.geometry) o.geometry.dispose();

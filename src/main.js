@@ -12,14 +12,10 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const hero = document.querySelector(".hero");
 const chips = [...document.querySelectorAll(".skill-chips [data-skill]")];
-const afterLoad = () =>
-  new Promise((resolve) => (document.readyState === "complete" ? resolve() : addEventListener("load", resolve, { once: true })));
-
 /* ---------------- Escena del hero ---------------- */
 const markChip = (slug) => chips.forEach((c) => c.classList.toggle("is-active", c.dataset.skill === slug));
 
 lazyScene(document.getElementById("skills-scene"), async () => {
-  await afterLoad();
   const [{ createSkillsScene }] = await Promise.all([import("./skills-scene.js"), document.fonts.ready]);
   if (motion.stopped) throw new Error("motion off");
   const scene = createSkillsScene(document.getElementById("skills-scene"), gsap, {
@@ -95,7 +91,7 @@ function buildMotion(stopped) {
       ease: "power3.out",
       clearProps: "all",
     });
-    gsap.from(".hero-lead, .hero-actions, .skill-chips li", {
+    gsap.from(".hero-lead, .hero-actions, .hero-peter-badge, .skill-chips li", {
       y: 12,
       opacity: 0,
       duration: 0.45,
@@ -108,9 +104,8 @@ function buildMotion(stopped) {
       ease: "none",
       scrollTrigger: { trigger: ".marquee", start: "top bottom", end: "bottom top", scrub: 0.8 },
     });
-    gsap.to(".hero-peter-v2 img", {
-      y: 30,
-      rotate: 2,
+    gsap.to(".hero-peter-badge", {
+      y: 16,
       ease: "none",
       scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.8 },
     });
