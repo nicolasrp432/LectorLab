@@ -6,6 +6,7 @@ import {
   SITE,
   skills,
   course,
+  notebooks,
   isAffiliate,
   productUrl,
   getSkill,
@@ -44,7 +45,7 @@ const NAV = [
   ["/habilidades/", "Habilidades", "skills"],
   ["/tienda/", "Tienda", "shop"],
   ["/tienda/curso-lectura-rapida/", "Curso", "course"],
-  ["/laboratorio/", "Laboratorio", "lab"],
+  ["/laboratorio/", "Prueba gratis", "lab"],
 ];
 
 function header(active) {
@@ -55,7 +56,7 @@ function header(active) {
   return `<header class="site-header">
       <a class="brand" href="/" aria-label="LectorLab, inicio">lectorlab<span class="brand-star" aria-hidden="true">✳</span></a>
       <nav class="desktop-nav" aria-label="Principal">${links}</nav>
-      <a class="btn btn-small" href="/tienda/" id="header-cta">Ir a la tienda <span aria-hidden="true">↗</span></a>
+      <a class="btn btn-small" href="/tienda/" id="header-cta">Explorar productos <span aria-hidden="true">↗</span></a>
       <details class="mobile-nav">
         <summary>Menú +</summary>
         <nav aria-label="Móvil"><a href="/">Inicio</a>${links}</nav>
@@ -75,7 +76,7 @@ function footer() {
       </div>
       <nav class="footer-col" aria-label="Habilidades"><p class="eyebrow">HABILIDADES</p><ul>${skillLinks}</ul></nav>
       <nav class="footer-col" aria-label="Tienda"><p class="eyebrow">TIENDA</p><ul>
-        <li><a href="/tienda/curso-lectura-rapida/">Curso de lectura rápida</a></li>
+        <li><a href="/tienda/curso-lectura-rapida/">Curso de lectura estratégica</a></li><li><a href="/tienda/cuadernos-lectorlab/">Cuadernos LectorLab</a></li>
         <li><a href="/tienda/?tipo=book">Libros</a></li>
         <li><a href="/tienda/?tipo=gadget">Gadgets de lectura</a></li>
       </ul></nav>
@@ -85,7 +86,7 @@ function footer() {
         <li><a href="/afiliados/">Enlaces y afiliados</a></li>
       </ul></nav>
       <div class="footer-bottom">
-        <span>© 2026 LectorLab · Edición piloto privada</span>
+        <span>© 2026 LectorLab · Por Nicolás Rodríguez</span>
         <span class="fine">${isAffiliate() ? "Algunos enlaces son de afiliado: si compras, LectorLab puede recibir una comisión sin coste para ti." : "Los enlaces a tiendas externas no generan comisión en esta versión."}</span>
         <button id="motion-toggle" type="button" aria-pressed="false">Pausar animaciones</button>
       </div>
@@ -111,7 +112,7 @@ export function layout({ title, description, path, body, entry, active = "", pag
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#d7ff3f" />
+    <meta name="theme-color" content="#0e1a16" />
     <!-- Edición piloto privada: quitar noindex al lanzar. -->
     <meta name="robots" content="noindex,nofollow" />
     <meta name="description" content="${esc(description)}" />
@@ -121,7 +122,7 @@ export function layout({ title, description, path, body, entry, active = "", pag
     <meta property="og:site_name" content="LectorLab" />
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:image" content="${SITE.url}/assets/peter-explaining-v1.webp" />
+    <meta property="og:image" content="${SITE.url}/assets/peter-portrait.webp" />
     <link rel="icon" href="/assets/mark.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/SpaceGrotesk.ttf" as="font" type="font/ttf" crossorigin />
     ${extraHead}
@@ -150,6 +151,7 @@ const hash = (s) => [...s].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
 
 /** Portada tipográfica: interpretación gráfica, no la portada editorial. */
 export function bookCover(book, size = "") {
+  if (book.image) return `<div class="real-cover ${size}"><img src="${esc(book.image)}" alt="Portada de ${esc(book.title)}" width="295" height="454" loading="lazy" decoding="async" /></div>`;
   const tone = COVER_TONES[hash(book.id) % COVER_TONES.length];
   return `<div class="cover cover--${tone} ${size}" aria-hidden="true">
         <span class="cover-pub">LECTORLAB RECOMIENDA</span>
@@ -172,8 +174,8 @@ export function courseBox() {
       </div>`;
 }
 
-function affiliateFlag() {
-  return isAffiliate()
+function affiliateFlag(item) {
+  return isAffiliate() && !item.buyUrl
     ? '<span class="aff-flag">Enlace de afiliado</span>'
     : '<span class="aff-flag aff-flag--plain">Tienda externa</span>';
 }
@@ -182,27 +184,29 @@ function affiliateFlag() {
 export function productCard(item, { heading = "h3" } = {}) {
   const itemSkills = skillsOf(item.id);
   const skillNames = itemSkills.map((s) => getSkill(s)?.name).filter(Boolean);
-  const typeLabel = { book: "LIBRO", gadget: "GADGET", course: "CURSO" }[item.type];
+  const typeLabel = { book: "LIBRO", gadget: "GADGET", course: "CURSO", notebook: "CUADERNOS" }[item.type];
   const href = productUrl(item);
-  const external = item.type !== "course";
+  const external = !["course", "notebook"].includes(item.type);
   const media =
     item.type === "book"
       ? bookCover(item)
       : item.type === "gadget"
         ? `<img src="${item.image}" alt="" width="800" height="800" loading="lazy" decoding="async" />`
-        : courseBox();
+        : item.type === "notebook" ? notebookBox() : courseBox();
   const cta =
-    item.type === "course"
-      ? `<a class="btn btn-small" href="${href}">Ver el curso <span aria-hidden="true">↗</span></a>`
-      : `<a class="btn btn-small" href="${esc(href)}" target="_blank" rel="${isAffiliate() ? "sponsored " : ""}noopener noreferrer">Ver en Amazon <span aria-hidden="true">↗</span><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>`;
+    !external
+      ? `<a class="btn btn-small" href="${href}">Ver ${item.type === "course" ? "el curso" : "los cuadernos"} <span aria-hidden="true">↗</span></a>`
+      : `<a class="btn btn-small" href="${esc(href)}" target="_blank" rel="${isAffiliate() && !item.buyUrl ? "sponsored " : ""}noopener noreferrer">${item.buyUrl ? "Ver en " + esc(item.retailer) : "Buscar en Amazon"} <span aria-hidden="true">↗</span><span class="visually-hidden"> (se abre en una pestaña nueva)</span></a>`;
   return `<article class="product-card product-card--${item.type}" data-type="${item.type}" data-skills="${itemSkills.join(" ")}" data-tilt>
       <div class="product-media">${media}</div>
+      ${item.type === "gadget" ? '<p class="media-caption">Imagen ilustrativa · comprueba el modelo en tienda</p>' : ""}
       <div class="product-body">
         <p class="eyebrow">${typeLabel}${skillNames[0] ? " · " + esc(skillNames[0].toUpperCase()) : ""}</p>
         <${heading} class="product-title">${esc(item.title)}</${heading}>
         ${item.author ? `<p class="product-author">${esc(item.author)}</p>` : ""}
         <p class="product-note">${esc(item.note || item.short || "")}</p>
-        <div class="product-foot">${cta}${external ? affiliateFlag() : ""}</div>
+        ${item.price ? `<p class="card-price">${esc(item.price)} <small>${esc(item.status)} · venta no abierta</small></p>` : ""}
+        <div class="product-foot">${cta}${external ? affiliateFlag(item) : ""}</div>
       </div>
     </article>`;
 }
@@ -221,3 +225,17 @@ export function skillCard(s, { heading = "h3" } = {}) {
 /** Chip compacto de habilidad. */
 export const skillChip = (s, attrs = "") =>
   `<a class="chip chip--${s.color}" href="/habilidades/${s.slug}/" data-skill="${s.slug}" ${attrs}>${icon(s.icon)}<span>${esc(s.name)}</span></a>`;
+
+/** Identidad visual del pack: un único componente para inicio, tienda y ficha. */
+export function notebookBox() {
+  return `<div class="notebook-stack" aria-hidden="true"><div class="notebook-back"><span>lectorlab / 02</span><strong>Vuelve<br>al libro.</strong><small>UN LUGAR AL QUE VOLVER</small></div><div class="notebook-front"><span>lectorlab / 01</span><strong>Lee y<br>hazlo<br><em>tuyo.</em></strong><small>EL PODER DE ENTENDER</small></div></div>`;
+}
+
+export function sectionIntro(kicker, title, copy, link = "") {
+  return `<div class="editorial-heading"><div><p class="eyebrow">${esc(kicker)}</p><h2>${title}</h2></div><div><p>${esc(copy)}</p>${link}</div></div>`;
+}
+
+export function ownProduct(item) {
+  const isCourse = item.type === "course";
+  return `<article class="own-product ${isCourse ? "own-course" : "own-notebook"}"><a class="own-visual" href="${productUrl(item)}" aria-label="Ver ${esc(item.title)}">${isCourse ? courseBox() : notebookBox()}</a><div class="own-copy"><p class="eyebrow">${isCourse ? "CURSO ONLINE · EN DESARROLLO" : "2 CUADERNOS PDF · EDICIÓN DE PRUEBA"}</p><h3>${esc(item.title)}</h3><p>${esc(item.short)}</p><div class="own-price"><strong>${esc(item.price)}</strong><span>${esc(item.priceNote)}</span></div><a class="text-link" href="${productUrl(item)}">${isCourse ? "Descubre el temario" : "Qué incluyen los cuadernos"} ↗</a><p class="availability">Venta aún no abierta.</p></div></article>`;
+}

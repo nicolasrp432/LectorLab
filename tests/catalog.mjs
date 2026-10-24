@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { skills, books, gadgets, course, getProduct, getSkill, skillsOf, amazonUrl, productUrl } from "../src/data/catalog.js";
+import { skills, books, gadgets, course, notebooks, getProduct, getSkill, skillsOf, amazonUrl, productUrl } from "../src/data/catalog.js";
 
 // Test skills integrity
 assert.ok(skills.length >= 7, "Skills array should have at least 7 skills");
@@ -21,7 +21,9 @@ for (const b of books) {
   assert.ok(b.title, "Book must have title");
   assert.ok(b.author, "Book must have author");
   const url = productUrl(b);
-  assert.ok(url.startsWith("https://www.amazon.es/"), "Book URL should point to Amazon");
+  assert.equal(new URL(url).protocol, "https:");
+  assert.ok(["www.amazon.es", "www.planetadelibros.com", "www.casadellibro.com"].includes(new URL(url).hostname));
+  if (b.buyUrl) assert.equal(url, b.buyUrl, "Use the verified edition link rather than a generic search");
 }
 
 // Test gadgets integrity
@@ -31,7 +33,8 @@ for (const g of gadgets) {
   assert.ok(g.title, "Gadget must have title");
   assert.ok(g.image, "Gadget must have image");
   const url = productUrl(g);
-  assert.ok(url.startsWith("https://www.amazon.es/"), "Gadget URL should point to Amazon");
+  assert.equal(new URL(url).protocol, "https:");
+  assert.ok(["www.amazon.es", "glocusent.com"].includes(new URL(url).hostname));
 }
 
 // Test course integrity
@@ -46,3 +49,12 @@ const habitosSkills = skillsOf("habitos-atomicos");
 assert.ok(habitosSkills.includes("foco-y-habitos"), "Habitos atomicos should be mapped to foco-y-habitos");
 
 console.log("PASS: catalog data integrity, relations, productUrl and skills mappings validated.");
+
+assert.equal(course.price, "49 €");
+assert.equal(notebooks.price, "19 €");
+assert.equal(course.checkoutUrl, "", "Do not open an unfinished course for purchase");
+assert.equal(notebooks.checkoutUrl, "", "Pilot notebook sales are not open");
+assert.equal(getProduct(notebooks.id), notebooks);
+assert.equal(productUrl(notebooks), "/tienda/cuadernos-lectorlab/");
+assert.deepEqual(skillsOf(notebooks.id), ["leer-mejor", "foco-y-habitos"]);
+assert.ok(skillsOf("el-poder-de-tu-alter-ego").includes("foco-y-habitos"));
