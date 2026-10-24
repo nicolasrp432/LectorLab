@@ -112,7 +112,7 @@ export function layout({ title, description, path, body, entry, active = "", pag
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#0e1a16" />
+    <meta name="theme-color" content="#121212" />
     <!-- Edición piloto privada: quitar noindex al lanzar. -->
     <meta name="robots" content="noindex,nofollow" />
     <meta name="description" content="${esc(description)}" />
@@ -122,7 +122,7 @@ export function layout({ title, description, path, body, entry, active = "", pag
     <meta property="og:site_name" content="LectorLab" />
     <meta property="og:title" content="${esc(title)}" />
     <meta property="og:description" content="${esc(description)}" />
-    <meta property="og:image" content="${SITE.url}/assets/peter-portrait.webp" />
+    <meta property="og:image" content="${SITE.url}/assets/peter-reading-cutout.webp" />
     <link rel="icon" href="/assets/mark.svg" type="image/svg+xml" />
     <link rel="preload" href="/fonts/SpaceGrotesk.ttf" as="font" type="font/ttf" crossorigin />
     ${extraHead}

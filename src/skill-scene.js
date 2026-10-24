@@ -41,13 +41,13 @@ export function createSkillTotemScene(container, gsap, { icon, color }) {
 
   /* ---------------- Materiales ---------------- */
   const mat = {
-    paper: new THREE.MeshStandardMaterial({ color: "#f4f1ed", roughness: 0.85 }),
-    lime: new THREE.MeshStandardMaterial({ color: "#e98a5b", roughness: 0.48, metalness: 0.05 }),
-    red: new THREE.MeshStandardMaterial({ color: "#a7b7a3", roughness: 0.5 }),
-    ink: new THREE.MeshStandardMaterial({ color: "#0e1a16", roughness: 0.6 }),
-    lens: new THREE.MeshStandardMaterial({ color: "#e98a5b", roughness: 0.2, transparent: true, opacity: 0.55 }),
+    paper: new THREE.MeshStandardMaterial({ color: "#f5f3ea", roughness: 0.85 }),
+    lime: new THREE.MeshStandardMaterial({ color: "#d7ff3f", roughness: 0.48, metalness: 0.05 }),
+    red: new THREE.MeshStandardMaterial({ color: "#f04432", roughness: 0.5 }),
+    ink: new THREE.MeshStandardMaterial({ color: "#121212", roughness: 0.6 }),
+    lens: new THREE.MeshStandardMaterial({ color: "#d7ff3f", roughness: 0.2, transparent: true, opacity: 0.55 }),
     pedestalTop: new THREE.MeshStandardMaterial({
-      color: color === "red" ? "#a7b7a3" : color === "lime" ? "#e98a5b" : "#f4f1ed",
+      color: color === "red" ? "#f04432" : color === "lime" ? "#d7ff3f" : "#f5f3ea",
       roughness: 0.6,
     }),
   };
