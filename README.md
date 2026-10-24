@@ -7,12 +7,14 @@ Web y tienda de LectorLab: **la lectura construye habilidades de éxito**. El co
 - **Habilidades como eje**: hub de habilidades (`/habilidades/`) con páginas específicas por habilidad, libros recomendados y ejercicios de 10 minutos para practicar de inmediato.
 - **Tienda integrada** (`/tienda/`): catálogo filtrable por tipo (Cursos, Libros, Gadgets) y habilidad.
 - **La llave maestra**: producto propio **«Lectura rápida y estratégica»** (`/tienda/curso-lectura-rapida/`) con temario estructurado y visor 3D interactivo.
-- **Hero con Peter real**: imagen de referencia aportada, libro CSS 3D, GSAP para entrada/profundidad y Motion para respuesta a hover. Sin órbitas ni marquesinas repetidas. Three.js solo se descarga en las fichas que lo requieren.
+- **Experiencia con Peter**: ilustraciones nuevas sin fondo basadas en las referencias aprobadas. Hero → historia en tres momentos → nave que despega con el scroll → habilidades y productos. Banner GSAP, profundidad y respuesta Motion; Three.js solo se descarga en las fichas que lo requieren.
 - **Cuadernos de lectura** (`/tienda/cuadernos-lectorlab/`): pack de dos PDF en edición de prueba, 19 € previstos. Curso: 49 € previstos de lanzamiento. Venta no abierta hasta configurar contenido, cobro y entrega.
 - **Laboratorio gratuito** (`/laboratorio/`): cuaderno de ejercicios interactivo de 7 días con persistencia local opcional y exportación de notas.
 - **Personaje**: Peter como compañero de aprendizaje honesto y curioso.
 
-Decisiones, referencias y límites comerciales: [STOREFRONT_2026-10-24.md](docs/STOREFRONT_2026-10-24.md).
+Dirección visual vigente y prompts de las ilustraciones: [EXPERIENCIA_PETER.md](docs/EXPERIENCIA_PETER.md).
+
+Decisiones anteriores, referencias y límites comerciales: [STOREFRONT_2026-10-24.md](docs/STOREFRONT_2026-10-24.md).
 
 ## Desarrollo
 
@@ -41,7 +43,9 @@ npm run test:browser # Build ya generado: responsive, WCAG, filtros, cuaderno y 
 - `src/data/catalog.js`: catálogo centralizado de habilidades, libros, gadgets y cursos.
 - `scripts/site/`: plantillas HTML y componentes compartidos de la web.
 - `scripts/generate-pages.mjs`: generador de las páginas estáticas multipágina.
-- `scripts/site/home.mjs`: portada editorial con componentes reutilizables.
+- `scripts/site/home.mjs`: portada con componentes reutilizables.
+- `scripts/site/story.mjs`: banner, capítulos de Peter y despegue.
+- `src/narrative.css`: composición y responsive de la historia.
 - `src/editorial.css`: paleta y componentes de la experiencia actual.
 - `src/course-viewer.js`: visor 3D interactivo del curso de lectura rápida.
 - `src/common.js`: gestión de movimiento reducido, barra de lectura, tilt 3D y apariciones.

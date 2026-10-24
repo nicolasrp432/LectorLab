@@ -105,7 +105,7 @@ function skillPage(s, idx) {
             </div>
             <p class="viewer-hint" aria-hidden="true">Arrastra el tótem para girarlo ↻</p>
             <figure class="peter-quote">
-              <img src="/assets/peter-curious.webp" alt="Peter comenta esta habilidad" width="1254" height="1254" loading="lazy" />
+              <img src="/assets/peter-reading-cutout.webp" alt="Peter comenta esta habilidad" width="850" height="1062" loading="lazy" />
               <blockquote>«${esc(s.peter)}»</blockquote>
               <figcaption>— Peter</figcaption>
             </figure>
@@ -277,7 +277,7 @@ function coursePage() {
           <p>${esc(course.limits)}</p>
         </div>
         <figure class="peter-quote peter-quote--large">
-          <img src="/assets/peter-portrait.webp" alt="" width="1254" height="1254" loading="lazy" />
+          <img src="/assets/peter-reading-cutout.webp" alt="" width="850" height="1062" loading="lazy" />
           <blockquote>«${esc(course.peterNote)}»</blockquote>
           <figcaption>— Peter</figcaption>
         </figure>
@@ -343,7 +343,7 @@ function lab() {
         <div class="section-heading"><h2>Deja de guardarlo.<br /><em>Empieza a usarlo.</em></h2><p>Elige una pregunta. Dedícale diez minutos.<br />Escribe lo que descubras y llévatelo contigo.</p></div>
         <div class="workbook">
           <aside class="workbook-sidebar">
-            <div class="peter-guide"><img src="/assets/peter-curious.webp" alt="Peter presenta el cuaderno" width="1254" height="1254" loading="lazy" /><p>Una pregunta cada vez.<br /><strong>Yo te acompaño.</strong></p></div>
+            <div class="peter-guide"><img src="/assets/peter-reading-cutout.webp" alt="Peter presenta el cuaderno" width="850" height="1062" loading="lazy" /><p>Una pregunta cada vez.<br /><strong>Yo te acompaño.</strong></p></div>
             <p class="eyebrow">TU CUADERNO · MUESTRA DE 7 DÍAS</p>
             <h3>De la idea<br />a la acción.</h3>
             <label for="topic">Elige tu punto de partida</label><select id="topic"><option value="money">Dinero con criterio</option><option value="relations">Relaciones y deseo</option><option value="attention">Atención y hábitos</option></select>

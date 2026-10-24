@@ -1,5 +1,7 @@
 # LectorLab · Portada editorial y catálogo
 
+> Registro de la primera iteración. La paleta, el hero y el recorrido visual fueron sustituidos por la [experiencia narrativa de Peter](EXPERIENCIA_PETER.md) a petición de Nicolás. Las decisiones de producto y los límites comerciales continúan vigentes.
+
 ## Resultado
 
 La portada pasa de repetir las siete habilidades en órbitas, chips, tarjetas y bloques de manifiesto a un recorrido único: propuesta de valor → tres rutas → productos propios → tres libros seleccionados → Peter y su amigo → práctica gratuita → preguntas frecuentes. Las siete rutas siguen disponibles en su hub y conservan sus URLs.

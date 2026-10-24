@@ -34,6 +34,10 @@ try {
       const url=path==='index.html'?'/':'/'+path.replace('index.html','');
       await page.goto(base+url,{waitUntil:'networkidle'});
       await page.evaluate(()=>document.fonts.ready);
+      await page.locator('img').evaluateAll(images => Promise.all(images.map(async img => {
+        img.loading = 'eager';
+        await img.decode().catch(() => {});
+      })));
       assert.equal(await page.locator('h1').count(),1,`${width} ${url}: one main heading`);
       if (!await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)) {
         const overflowing=await page.locator('main *').evaluateAll(els=>els.filter(el=>el.getBoundingClientRect().right>innerWidth+1).map(el=>({tag:el.tagName,cls:el.className,right:el.getBoundingClientRect().right})).slice(0,12));
@@ -98,18 +102,48 @@ try {
   await page.locator('#course-scene').scrollIntoViewIfNeeded();
   await page.waitForFunction(()=>document.querySelector('#course-scene canvas'));
   await page.emulateMedia({reducedMotion:'reduce'});
+  await page.waitForFunction(()=>!document.querySelector('#course-scene canvas'));
   assert.equal(await page.locator('#course-scene canvas').count(),0);
   console.log('PASS: WebGL loads, pauses, resumes and respects reduced motion.');
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto(base+'/',{waitUntil:'networkidle'});
   await page.waitForTimeout(1500);
   await page.screenshot({path:'tmp/qa/desktop-hero.png'});
+  const flightState = () => page.evaluate(() => ({
+    transform: document.querySelector('#rocket').getAttribute('transform'),
+    trail: parseFloat(getComputedStyle(document.querySelector('#rocket-path')).strokeDashoffset),
+  }));
+  await page.evaluate(() => {
+    const r = document.querySelector('.rocket-stage').getBoundingClientRect();
+    scrollTo({top: scrollY + r.top - innerHeight * .75 + 2, behavior:'instant'});
+  });
+  await page.waitForTimeout(900);
+  const launch = await flightState();
+  await page.evaluate(() => {
+    const r = document.querySelector('.rocket-stage').getBoundingClientRect();
+    scrollTo({top: scrollY + r.bottom - innerHeight * .4 + 2, behavior:'instant'});
+  });
+  await page.waitForTimeout(900);
+  const landing = await flightState();
+  assert.notEqual(landing.transform,launch.transform,'Rocket moves with scroll');
+  assert.ok(landing.trail < launch.trail && landing.trail < 1,'Flight path follows rocket');
+  await page.locator('#cohete').screenshot({path:'tmp/qa/rocket-story.png'});
+  await page.locator('#motion-toggle').click();
+  assert.equal(await page.locator('#rocket').evaluate(el=>getComputedStyle(el).opacity),'1','Static rocket remains visible');
+  assert.equal(await page.locator('.marquee-track').evaluate(el=>getComputedStyle(el).transform),'none','Banner animation is cleaned up');
+  await page.locator('#motion-toggle').click();
+  await page.locator('[data-story-step]').nth(1).scrollIntoViewIfNeeded();
+  await page.waitForTimeout(900);
+  assert.ok(await page.locator('[data-story-step]').nth(1).evaluate(el=>parseFloat(getComputedStyle(el).getPropertyValue('--step-progress')) > 0),'Chapter progress reacts to scroll');
+  await page.locator('#historia').screenshot({path:'tmp/qa/peter-story.png'});
+  console.log('PASS: rocket trajectory, chapter progress, banner pause/resume and static fallback.');
   await page.locator('.path-card').first().hover();
   await page.waitForTimeout(350);
   assert.notEqual(await page.locator('.path-card').first().evaluate(el=>getComputedStyle(el).transform),'none');
   await page.locator('#motion-toggle').click();
   assert.equal(await page.locator('.path-card').first().evaluate(el=>getComputedStyle(el).transform),'none');
   await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+  await page.locator('img').evaluateAll(images => Promise.all(images.map(async img => { img.loading='eager'; await img.decode(); })));
   await page.screenshot({path:'tmp/qa/desktop-full.png',fullPage:true});
   await page.setViewportSize({width:390,height:844});
   await page.goto(base+'/',{waitUntil:'networkidle'});
@@ -122,6 +156,8 @@ try {
   const noJs=await browser.newContext({javaScriptEnabled:false});
   const staticPage=await noJs.newPage();await staticPage.goto(base+'/');
   assert.ok(await staticPage.locator('#hero-cta').isVisible());
+  assert.equal(await staticPage.locator('[data-story-step]').count(),3);
+  assert.equal(await staticPage.locator('#rocket').evaluate(el=>getComputedStyle(el).opacity),'1');
   assert.equal(await staticPage.locator('.curated-grid a[href^="https:"]').count(),3);
   await noJs.close();
   console.log('PASS: Motion hover/pause, mobile menu and no-JavaScript content.');

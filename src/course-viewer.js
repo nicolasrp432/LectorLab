@@ -46,9 +46,9 @@ export function createCourseViewer(container, gsap) {
   }
 
   const front = canvasTexture(768, 1036, (c, w, h) => {
-    c.fillStyle = "#e98a5b";
+    c.fillStyle = "#d7ff3f";
     c.fillRect(0, 0, w, h);
-    c.fillStyle = "#0e1a16";
+    c.fillStyle = "#121212";
     c.font = "600 34px Space, sans-serif";
     c.fillText("lectorlab / curso 01", 60, 90);
     c.fillRect(60, 125, w - 120, 2);
@@ -62,9 +62,9 @@ export function createCourseViewer(container, gsap) {
     c.fillText("↗", w - 120, 965);
   });
   const back = canvasTexture(768, 1036, (c, w, h) => {
-    c.fillStyle = "#f4f1ed";
+    c.fillStyle = "#f5f3ea";
     c.fillRect(0, 0, w, h);
-    c.fillStyle = "#0e1a16";
+    c.fillStyle = "#121212";
     c.font = "600 30px Space, sans-serif";
     c.fillText("LO QUE VAS A ENTRENAR", 60, 110);
     c.fillRect(60, 140, w - 120, 2);
@@ -72,33 +72,33 @@ export function createCourseViewer(container, gsap) {
     ["01  Lee con un objetivo", "02  Previsualiza", "03  Menos relecturas", "04  Lectura selectiva", "05  Recordar lo leído", "06  Tu sistema"].forEach(
       (l, i) => c.fillText(l, 60, 240 + i * 92),
     );
-    c.fillStyle = "#a7b7a3";
+    c.fillStyle = "#f04432";
     c.beginPath();
     c.arc(w - 150, h - 160, 80, 0, Math.PI * 2);
     c.fill();
-    c.fillStyle = "#0e1a16";
+    c.fillStyle = "#121212";
     c.font = "400 110px Instrument, serif";
     c.fillText("✳", w - 190, h - 125);
   });
   const spine = canvasTexture(256, 1036, (c, w, h) => {
-    c.fillStyle = "#0e1a16";
+    c.fillStyle = "#121212";
     c.fillRect(0, 0, w, h);
     c.save();
     c.translate(w / 2 + 16, h - 60);
     c.rotate(-Math.PI / 2);
-    c.fillStyle = "#e98a5b";
+    c.fillStyle = "#d7ff3f";
     c.font = "700 54px Space, sans-serif";
     c.fillText("LECTORLAB ✳ LEER MEJOR", 0, 0);
     c.restore();
   });
   const pages = canvasTexture(256, 1036, (c, w, h) => {
-    c.fillStyle = "#f4f1ed";
+    c.fillStyle = "#f5f3ea";
     c.fillRect(0, 0, w, h);
     c.fillStyle = "#c3c3b9";
     for (let x = 6; x < w; x += 9) c.fillRect(x, 0, 2, h);
   });
   const pagesTop = canvasTexture(256, 256, (c, w, h) => {
-    c.fillStyle = "#f4f1ed";
+    c.fillStyle = "#f5f3ea";
     c.fillRect(0, 0, w, h);
     c.fillStyle = "#c3c3b9";
     for (let y = 6; y < h; y += 9) c.fillRect(0, y, w, 2);
@@ -114,12 +114,12 @@ export function createCourseViewer(container, gsap) {
 
   // Anillo orbital decorativo y «luna» lima.
   const ringGeo = new THREE.TorusGeometry(2.45, 0.012, 8, 120);
-  const ringMat = new THREE.MeshBasicMaterial({ color: "#0e1a16" });
+  const ringMat = new THREE.MeshBasicMaterial({ color: "#121212" });
   const ring = new THREE.Mesh(ringGeo, ringMat);
   ring.rotation.set(1.2, 0.25, 0);
   scene.add(ring);
   const moonGeo = new THREE.SphereGeometry(0.16, 24, 16);
-  const moonMat = new THREE.MeshStandardMaterial({ color: "#a7b7a3", roughness: 0.45 });
+  const moonMat = new THREE.MeshStandardMaterial({ color: "#f04432", roughness: 0.45 });
   const moon = new THREE.Mesh(moonGeo, moonMat);
   scene.add(moon);
 
