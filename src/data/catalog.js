@@ -5,7 +5,7 @@
  *
  * ⚠️ Antes de publicar:
  *  - Rellenar AMAZON_TAG con el tag real de Amazon Afiliados (amazon.es).
- *  - Rellenar course.checkoutUrl y course.price cuando exista la plataforma de cobro.
+ *  - Conectar checkout solo cuando producto, condiciones y entrega estén listos.
  *  - Verificar cada libro (título, edición en español, autor) antes de recomendarlo.
  */
 
@@ -15,7 +15,7 @@ export const AMAZON_TAG = "";
 export const SITE = {
   name: "LectorLab",
   url: "https://lectorlab.com", // TODO: dominio definitivo
-  claim: "Lo que sabes cambia tu juego.",
+  claim: "Lee. Aprende. Hazlo posible.",
   promise:
     "Te ayudamos a elegir qué leer, a leer mejor y a convertir lo leído en una habilidad.",
 };
@@ -154,7 +154,7 @@ export const skills = [
     exercise:
       "¿Dónde podrías dejar el libro esta noche para que empezar a leer mañana sea un poco más fácil?",
     peter: "Mi regla: una página. Si me apetece, sigo. Casi siempre sigo.",
-    books: ["habitos-atomicos", "enfocate", "el-poder-de-los-habitos"],
+    books: ["habitos-atomicos", "el-poder-de-tu-alter-ego", "enfocate", "el-poder-de-los-habitos"],
     gadgets: ["temporizador", "lampara", "atril"],
   },
   {
@@ -185,7 +185,7 @@ export const skills = [
 /* Productos                                                           */
 /* ------------------------------------------------------------------ */
 
-/** Producto propio. checkoutUrl/price vacíos = venta todavía no abierta. */
+/** Producto propio. Precio previsto; checkout vacío = venta no abierta. */
 export const course = {
   id: "curso-lectura-rapida",
   type: "course",
@@ -195,7 +195,9 @@ export const course = {
   skills: ["leer-mejor"],
   short:
     "Aprende a leer con un objetivo, avanzar más rápido por lo que ya sabes y recordar lo que importa.",
-  price: null, // p. ej. "49 €" cuando esté decidido
+  price: "49 €",
+  priceNote: "Precio previsto de lanzamiento · pago único",
+  status: "En desarrollo",
   checkoutUrl: "", // URL de Hotmart / Lemon Squeezy / Stripe
   peterNote: "No se trata de leer a toda velocidad. Se trata de saber dónde frenar.",
   modules: [
@@ -216,7 +218,20 @@ export const course = {
 };
 
 /** Libros recomendados (afiliado). Portadas: interpretación gráfica, no la editorial. */
+export const notebooks = {
+  id: "cuadernos-lectorlab", type: "notebook", slug: "cuadernos-lectorlab",
+  title: "Lee y hazlo tuyo", subtitle: "El pack de cuadernos LectorLab",
+  price: "19 €", priceNote: "Precio previsto del pack · pago único", checkoutUrl: "",
+  status: "Edición de prueba", skills: ["leer-mejor", "foco-y-habitos"],
+  short: "Dos cuadernos para comprender una lectura y encontrar espacio para volver a ella.",
+  includes: [
+    ["Lee y hazlo tuyo", "34 páginas · antes, durante y después de leer. Preguntas, recuperación de ideas y espacio para conectar lo aprendido."],
+    ["Vuelve al libro", "26 páginas · 28 propuestas flexibles para hacer sitio a la lectura. Sin rachas obligatorias ni deuda de páginas."]
+  ],
+};
+
 export const books = [
+  { id: "el-poder-de-tu-alter-ego", image: "/assets/products/alter-ego.webp", title: "El poder de tu alter ego", author: "Todd Herman", isbn: "9791387662356", sourceUrl: "https://www.edicionesurano.com/el-poder-de-tu-alter-ego", buyUrl: "https://www.casadellibro.com/libro-el-poder-de-tu-alter-ego/9791387662356/17958450", retailer: "Casa del Libro", note: "Una lectura para explorar cómo te preparas ante un reto. El libro elegido para nuestro piloto de lectura aplicada." },
   { id: "como-leer-un-libro", title: "Cómo leer un libro", author: "Mortimer J. Adler y Charles Van Doren", note: "El manual clásico para leer con método, de la lectura de inspección a la analítica." },
   { id: "aprender-a-aprender", title: "Aprender a aprender", author: "Barbara Oakley y Terrence Sejnowski", note: "Cómo funciona el cerebro cuando aprende y técnicas sencillas para estudiar mejor." },
   { id: "enfocate", title: "Enfócate", author: "Cal Newport", note: "Por qué la concentración profunda es una ventaja y cómo entrenarla." },
@@ -226,10 +241,10 @@ export const books = [
   { id: "vender-es-humano", title: "Vender es humano", author: "Daniel H. Pink", note: "Por qué todos vendemos algo y cómo hacerlo con honestidad." },
   { id: "rompe-la-barrera-del-no", title: "Rompe la barrera del no", author: "Chris Voss", note: "Técnicas de negociación de un exnegociador del FBI, aplicables al día a día." },
   { id: "conversaciones-cruciales", title: "Conversaciones cruciales", author: "Kerry Patterson y otros", note: "Herramientas para hablar cuando hay mucho en juego y las emociones suben." },
-  { id: "como-ganar-amigos", title: "Cómo ganar amigos e influir sobre las personas", author: "Dale Carnegie", note: "Un clásico sobre trato humano que sigue vigente casi un siglo después." },
+  { id: "como-ganar-amigos", image: "/assets/products/como-ganar-amigos.webp", isbn: "9788411723985", buyUrl: "https://www.casadellibro.com/libro-como-ganar-amigos-e-influir-sobre-las-personas/9788411723985/17972184", retailer: "Casa del Libro", title: "Cómo ganar amigos e influir sobre las personas", author: "Dale Carnegie", note: "Un clásico sobre trato humano que sigue vigente casi un siglo después." },
   { id: "psicologia-del-dinero", title: "La psicología del dinero", author: "Morgan Housel", note: "Historias cortas sobre cómo el comportamiento pesa más que el conocimiento financiero." },
   { id: "hombre-mas-rico-de-babilonia", title: "El hombre más rico de Babilonia", author: "George S. Clason", note: "Parábolas sencillas sobre ahorro y paciencia. Ideal para empezar." },
-  { id: "habitos-atomicos", title: "Hábitos atómicos", author: "James Clear", note: "Cambios pequeños, sistema claro: cómo se construyen y se rompen los hábitos." },
+  { id: "habitos-atomicos", image: "/assets/products/habitos-atomicos.webp", isbn: "9788418118036", sourceUrl: "https://www.planetadelibros.com/libro-habitos-atomicos/310441", buyUrl: "https://www.planetadelibros.com/libro-habitos-atomicos/310441", retailer: "la editorial", title: "Hábitos atómicos", author: "James Clear", note: "Cambios pequeños, sistema claro: cómo se construyen y se rompen los hábitos." },
   { id: "el-poder-de-los-habitos", title: "El poder de los hábitos", author: "Charles Duhigg", note: "El ciclo señal, rutina y recompensa, contado con casos de personas y empresas." },
   { id: "el-mundo-y-sus-demonios", title: "El mundo y sus demonios", author: "Carl Sagan", note: "La ciencia como una vela en la oscuridad: pensamiento crítico para todos." },
   { id: "feynman", title: "¿Está usted de broma, Sr. Feynman?", author: "Richard P. Feynman", note: "Las aventuras de un Nobel de Física curioso por todo. Contagia ganas de entender." },
@@ -238,8 +253,8 @@ export const books = [
 
 /** Gadgets de lectura (afiliado). `query` = búsqueda en Amazon. */
 export const gadgets = [
-  { id: "e-reader", title: "Lector de libros electrónicos", query: "kindle paperwhite", image: "/assets/products/e-reader.webp", note: "Pantalla de tinta electrónica, sin reflejos y con cientos de libros en el bolsillo." },
-  { id: "lampara", title: "Lámpara de lectura de cuello", query: "lampara lectura cuello", image: "/assets/products/lampara.webp", note: "Luz cálida donde la necesitas, sin molestar a quien duerme al lado." },
+  { id: "e-reader", title: "Kindle Paperwhite", query: "kindle paperwhite", illustration: true, image: "/assets/products/e-reader.webp", note: "Pantalla de tinta electrónica, sin reflejos y con cientos de libros en el bolsillo." },
+  { id: "lampara", title: "Glocusent Original · luz de lectura", query: "Glocusent Original luz lectura cuello", buyUrl: "https://glocusent.com/es/collections/glocusent-top-sellers/products/glocusent-eyecaring-led-neck-reading-light-gray", retailer: "Glocusent", illustration: true, image: "/assets/products/lampara.webp", note: "Luz cálida donde la necesitas, sin molestar a quien duerme al lado." },
   { id: "atril", title: "Atril para libros", query: "atril para libros madera", image: "/assets/products/atril.webp", note: "Mantiene el libro abierto y la espalda recta. Manos libres para tomar notas." },
   { id: "temporizador", title: "Temporizador de enfoque", query: "temporizador cubo pomodoro", image: "/assets/products/temporizador.webp", note: "Bloques de lectura de 25 minutos sin tocar el móvil." },
   { id: "notas-transparentes", title: "Notas adhesivas transparentes", query: "notas adhesivas transparentes", image: "/assets/products/notas.webp", note: "Anota sobre la página sin escribir en el libro. Perfectas para libros prestados." },
@@ -260,17 +275,19 @@ export function amazonUrl(query) {
 }
 
 export function productUrl(item) {
-  if (item.type === "course") return `/tienda/${item.slug}/`;
+  if (["course", "notebook"].includes(item.type)) return `/tienda/${item.slug}/`;
+  if (item.buyUrl) return item.buyUrl;
   if (item.type === "book") return amazonUrl(`${item.title} ${item.author.split(" y ")[0]}`);
   return amazonUrl(item.query);
 }
 
-const byId = new Map([...books, ...gadgets, course].map((p) => [p.id, p]));
+const byId = new Map([...books, ...gadgets, course, notebooks].map((p) => [p.id, p]));
 export const getProduct = (id) => byId.get(id);
 export const getSkill = (slug) => skills.find((s) => s.slug === slug);
 
 /** Habilidades a las que pertenece un producto (derivado de las listas de cada habilidad). */
 export function skillsOf(id) {
   if (id === course.id) return course.skills;
+  if (id === notebooks.id) return notebooks.skills;
   return skills.filter((s) => s.books.includes(id) || s.gadgets.includes(id)).map((s) => s.slug);
 }

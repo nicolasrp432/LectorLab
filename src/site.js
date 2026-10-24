@@ -13,7 +13,7 @@ if (grid) {
   const empty = document.getElementById("filter-empty");
   const featured = document.querySelector(".featured-course");
   const cards = [...grid.querySelectorAll(".product-card")];
-  const TYPES = new Set(["all", "course", "book", "gadget"]);
+  const TYPES = new Set(["all", "course", "notebook", "book", "gadget"]);
 
   const params = new URLSearchParams(location.search);
   let type = TYPES.has(params.get("tipo")) ? params.get("tipo") : "all";

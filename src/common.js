@@ -6,6 +6,7 @@
  */
 import "./style.css";
 import "./store.css";
+import "./editorial.css";
 
 const STORAGE_KEY = "lectorlab-motion";
 const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -53,7 +54,7 @@ toggle?.addEventListener("click", () => {
   applyMotion();
 });
 media.addEventListener("change", (e) => {
-  stopped = e.matches;
+  stopped = e.matches || readPref() === "off";
   applyMotion();
 });
 applyMotion();
@@ -65,6 +66,13 @@ mobileNav?.querySelectorAll("nav a").forEach((a) =>
     mobileNav.open = false;
   }),
 );
+
+mobileNav?.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    mobileNav.open = false;
+    mobileNav.querySelector("summary")?.focus();
+  }
+});
 
 /* Barra de progreso de lectura (CSS custom property, sin librerías). */
 const progress = document.querySelector(".reading-progress");
@@ -133,38 +141,48 @@ if ("IntersectionObserver" in window) {
  * Respeta movimiento reducido y ahorro de datos (se queda la versión CSS).
  */
 export function lazyScene(container, loader) {
-  if (!container || navigator.connection?.saveData) return;
+  if (!container || navigator.connection?.saveData || !("IntersectionObserver" in window)) return;
   let scene = null;
   let loading = false;
+  let disposed = false;
+  let generation = 0;
   const start = () => {
-    if (scene || loading || stopped) return;
+    if (scene || loading || stopped || disposed) return;
     loading = true;
-    loader()
-      .then((s) => {
-        scene = s;
-      })
-      .catch(() => {})
-      .finally(() => {
-        loading = false;
-      });
-  };
-  const io = new IntersectionObserver(
-    ([e]) => {
-      if (e.isIntersecting) {
-        start();
+    const token = generation;
+    loader().then(s => {
+      if (stopped || disposed || token !== generation) s?.dispose();
+      else scene = s;
+    }).catch(() => {}).finally(() => {
+      loading = false;
+      if (token !== generation && !stopped && !disposed) {
+        const r = container.getBoundingClientRect();
+        if (r.top < innerHeight + 200 && r.bottom > -200) start();
       }
-    },
-    { rootMargin: "200px" },
-  );
+    });
+  };
+  const io = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) start();
+  }, {rootMargin: "200px"});
   io.observe(container);
-  motion.onChange((isStopped) => {
-    if (isStopped && scene) {
-      scene.dispose();
-      scene = null;
-    } else if (!isStopped) {
-      const r = container.getBoundingClientRect();
-      if (r.top < innerHeight + 200 && r.bottom > -200) start();
-    }
+  const unsubscribe = motion.onChange(isStopped => {
+    generation++;
+    if (isStopped) { scene?.dispose(); scene = null; }
+    else { const r = container.getBoundingClientRect(); if (r.top < innerHeight + 200 && r.bottom > -200) start(); }
   });
-  addEventListener("pagehide", () => scene?.dispose());
+  addEventListener("pagehide", (event) => {
+    disposed = true;
+    generation++;
+    io.disconnect();
+    if (!event.persisted) unsubscribe();
+    scene?.dispose();
+    scene = null;
+  });
+  addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+    disposed = false;
+    io.observe(container);
+    const r = container.getBoundingClientRect();
+    if (r.top < innerHeight + 200 && r.bottom > -200) start();
+  });
 }

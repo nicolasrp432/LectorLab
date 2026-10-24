@@ -14,6 +14,6 @@ const pages = allPages();
 for (const { path, html } of pages) {
   const out = join(root, path);
   await mkdir(dirname(out), { recursive: true });
-  await writeFile(out, html, "utf8");
+  await writeFile(out, html.replace(/[ \t]+$/gm, ""), "utf8");
 }
 console.log(`✓ ${pages.length} páginas generadas`);

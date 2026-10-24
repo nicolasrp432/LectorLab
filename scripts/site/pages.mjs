@@ -1,15 +1,15 @@
+import { home } from "./home.mjs";
 /**
  * Plantillas de página. Cada función devuelve { path, html }.
  * `path` es el archivo de salida relativo a la raíz del proyecto.
  */
-import { skills, course, books, gadgets, getProduct, getSkill, isAffiliate } from "../../src/data/catalog.js";
-import { esc, icon, layout, bookCover, courseBox, productCard, skillCard, skillChip } from "./ui.mjs";
+import { skills, course, notebooks, books, gadgets, getProduct, getSkill, isAffiliate } from "../../src/data/catalog.js";
+import { esc, icon, layout, bookCover, courseBox, productCard, skillCard, skillChip, notebookBox } from "./ui.mjs";
 
-const featuredBooks = ["habitos-atomicos", "influencia", "charlas-ted", "el-mundo-y-sus-demonios"];
 const affiliateNote = () =>
   isAffiliate()
-    ? "Algunos enlaces son de afiliado: si compras, LectorLab puede recibir una comisión sin coste extra para ti. Portadas: interpretación gráfica, no la portada editorial."
-    : "Los enlaces llevan a tiendas externas. Portadas: interpretación gráfica, no la portada editorial.";
+    ? "Algunos enlaces son de afiliado: si compras, LectorLab puede recibir una comisión sin coste extra para ti. Las portadas tipográficas sin imagen son interpretaciones de LectorLab."
+    : "Los enlaces llevan a tiendas externas. Las portadas tipográficas sin imagen son interpretaciones de LectorLab.";
 const priceLabel = () => course.price || "Precio por anunciar";
 const courseCta = (id = "course-cta") =>
   course.checkoutUrl
@@ -17,223 +17,7 @@ const courseCta = (id = "course-cta") =>
     : `<a class="btn btn-lime" id="${id}" href="/tienda/curso-lectura-rapida/#temario">Ver el temario <span aria-hidden="true">↗</span></a>`;
 
 /* ================================================================== */
-/* HOME                                                                */
-/* ================================================================== */
-function home() {
-  const badges = skills
-    .map((s, i) => `<span class="orbit-badge orbit-badge--${s.color}" style="--i:${i};--n:${skills.length}">${icon(s.icon)}</span>`)
-    .join("");
-  const chips = skills.map((s) => `<li>${skillChip(s)}</li>`).join("");
-  const cards = skills.map((s) => skillCard(s)).join("");
-  const shopItems = [...featuredBooks.map(getProduct), getProduct("e-reader"), getProduct("lampara"), getProduct("temporizador")]
-    .map((p) => productCard(p))
-    .join("");
-
-  const body = `
-      <section class="hero hero-v2 section-pad" id="inicio">
-        <div class="hero-top">
-          <p class="eyebrow"><span class="status-dot"></span> LA LECTURA CONSTRUYE HABILIDADES</p>
-          <span class="eyebrow hero-edition">VOL. 02 / APRENDE LO QUE QUIERAS</span>
-        </div>
-        <div class="hero-layout">
-          <div class="hero-copy">
-            <h1><span>Cualquier</span><br /><span>habilidad</span><br /><span>empieza en</span><br /><em>una página.</em><span class="headline-star" aria-hidden="true">✳</span></h1>
-            <p class="hero-lead">Hablar en público. Vender. Negociar. Hasta lanzar un cohete a la Luna. Todo lo que quieres aprender ya lo escribió alguien: te ayudamos a encontrarlo, leerlo mejor y ponerlo en práctica.</p>
-            <div class="hero-actions">
-              <a href="#habilidades" class="btn btn-lime" id="hero-cta">Elige tu habilidad <span aria-hidden="true">↗</span></a>
-              <a href="/tienda/" class="text-link" id="hero-shop">Ver la tienda ↗</a>
-            </div>
-            <div class="hero-peter-badge">
-              <div class="peter-badge-avatar">
-                <img src="/assets/peter-reading-v2.webp" alt="Peter, la nutria de LectorLab" width="80" height="80" fetchpriority="high" />
-              </div>
-              <div class="peter-badge-content">
-                <p class="peter-badge-quote">«Elige una habilidad. Yo te enseño el libro para empezar hoy.»</p>
-                <span class="peter-badge-author">— Peter · aprendiz de LectorLab</span>
-              </div>
-            </div>
-          </div>
-          <div class="skills-visual" id="skills-visual">
-            <div class="skills-scene" id="skills-scene" aria-label="Escena 3D interactiva del libro de habilidades">
-              <div class="skills-fallback">
-                <div class="fallback-book">
-                  <div class="fallback-cover"><span>lectorlab / 02</span><strong>CUALQUIER<br />HABILIDAD<br />ESTÁ<br />ESCRITA.</strong><small>ELIGE. LEE. PRACTICA.</small></div>
-                  <div class="fallback-pages"></div>
-                </div>
-                <div class="orbit-badges">${badges}</div>
-              </div>
-            </div>
-            <div class="scene-hint" aria-hidden="true">
-              <span class="scene-hint-badge">3D INTERACTIVO</span>
-              <span>Gira el libro · Toca los iconos para explorar</span>
-            </div>
-          </div>
-        </div>
-        <div class="hero-skills-strip" aria-label="Explora por habilidad">
-          <div class="strip-header">
-            <span class="eyebrow"><span class="mini-star" aria-hidden="true">✳</span> EXPLORA POR HABILIDAD</span>
-            <span class="strip-count">[ ${skills.length} ÁREAS ]</span>
-          </div>
-          <ul class="skill-chips">${chips}</ul>
-        </div>
-        <div class="hero-bottom">
-          <span><span class="mini-star" aria-hidden="true">✳</span> Para curiosos que quieren aprender haciendo.</span>
-          <a href="#habilidades">TIRA DEL HILO <span aria-hidden="true">↓</span></a>
-          <span>LA LECTURA CONSTRUYE HABILIDADES / LECTORLAB</span>
-        </div>
-      </section>
-
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee-track">
-          <span>LEE. APRENDE. HAZLO.</span><i>✳</i><span>CUALQUIER HABILIDAD ESTÁ ESCRITA.</span><i>✳</i><span>LEE. APRENDE. HAZLO.</span><i>✳</i><span>CUALQUIER HABILIDAD ESTÁ ESCRITA.</span><i>✳</i>
-        </div>
-      </div>
-
-      <section class="skills-section section-pad" id="habilidades">
-        <div class="section-top">
-          <p class="eyebrow">01 / ¿QUÉ QUIERES APRENDER?</p>
-          <span class="section-index">[ ${skills.length} HABILIDADES · Y CONTANDO ]</span>
-        </div>
-        <div class="section-heading">
-          <h2>Elige una habilidad.<br /><em>Te damos el libro.</em></h2>
-          <p>Cada habilidad tiene su estantería, un ejercicio para empezar hoy y las herramientas que hacen más fácil leer.</p>
-        </div>
-        <div class="skill-grid">${cards}</div>
-      </section>
-
-      <section class="rocket-section section-pad" id="cohete" aria-labelledby="rocket-title">
-        <div class="rocket-copy">
-          <p class="eyebrow">02 / EL PODER DEL CONOCIMIENTO</p>
-          <h2 id="rocket-title">…hasta lanzar<br />un cohete<br /><em>a la Luna.</em></h2>
-          <p>Ningún cohete despegó sin libros. Física, matemáticas, errores documentados: cada logro humano quedó escrito para que alguien lo continuara. Lo que otros aprendieron en décadas, tú puedes leerlo en semanas.</p>
-          <a class="text-link text-link--light" href="/habilidades/pensar-como-cientifico/">Pensar como un científico ↗</a>
-        </div>
-        <div class="rocket-stage" aria-hidden="true">
-          <svg class="rocket-svg" viewBox="0 0 600 600">
-            <circle class="moon" cx="500" cy="100" r="62" />
-            <circle class="moon-crater" cx="480" cy="85" r="10" />
-            <circle class="moon-crater" cx="520" cy="118" r="7" />
-            <path id="rocket-path" class="rocket-path" d="M60 560 C 120 380, 300 420, 330 280 S 430 120, 470 140" />
-            <g class="stars"><circle cx="90" cy="90" r="2"/><circle cx="220" cy="60" r="1.5"/><circle cx="330" cy="140" r="2"/><circle cx="560" cy="260" r="1.5"/><circle cx="160" cy="250" r="1.5"/><circle cx="420" cy="330" r="2"/><circle cx="540" cy="470" r="1.5"/></g>
-            <g id="rocket" class="rocket">
-              <path class="rocket-flame" d="M-9 22 L0 46 L9 22 Z" />
-              <path class="rocket-body" d="M0 -38 C 14 -26, 16 -6, 14 22 L -14 22 C -16 -6, -14 -26, 0 -38 Z" />
-              <circle class="rocket-window" cx="0" cy="-8" r="6" />
-              <path class="rocket-fin" d="M-14 8 L -26 26 L -14 22 Z M14 8 L 26 26 L 14 22 Z" />
-            </g>
-          </svg>
-        </div>
-      </section>
-
-      <section class="method-section" id="metodo">
-        <div class="method-frame section-pad">
-          <div class="section-top">
-            <p class="eyebrow">03 / DEL LIBRO A LA HABILIDAD</p>
-            <span class="section-index">[ LEER NO BASTA ]</span>
-          </div>
-          <div class="method-layout">
-            <div class="method-left">
-              <h2>Leer no basta.<br /><em>Hay que entrenar.</em></h2>
-              <div class="method-object" aria-hidden="true">
-                <div class="note-sheet"><span>MI PRÓXIMA HABILIDAD / LL.</span><strong>¿Qué sabré<br />hacer <i>después<br />de leer?</i></strong><span class="note-arrow">↗</span></div>
-                <span class="method-scribble">Practícalo hoy.</span>
-              </div>
-            </div>
-            <div class="method-right">
-              <article class="method-step"><span>01 /</span><h3>Elige una habilidad.</h3><p>Algo concreto que quieras saber hacer: presentar un proyecto, negociar un precio, entender un tema desde cero.</p><blockquote>«Quiero hablar en público sin bloquearme.»</blockquote></article>
-              <article class="method-step"><span>02 /</span><h3>Lee con un objetivo.</h3><p>Elige el libro adecuado, ve a los capítulos que responden a tu objetivo y explica la idea con tus palabras.</p><blockquote>«¿Qué técnica puedo probar esta semana?»</blockquote></article>
-              <article class="method-step"><span>03 /</span><h3>Practica algo pequeño.</h3><p>Una acción reversible, un minuto grabado, una conversación. Observa qué pasa y ajusta.</p><blockquote>«¿Qué hago distinto ahora?»</blockquote></article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="master-section section-pad" id="curso">
-        <div class="master-visual">
-          <div class="course-scene" id="course-scene" aria-hidden="true">${courseBox()}</div>
-          <span class="master-sticker" aria-hidden="true">LA HABILIDAD<br />QUE DESBLOQUEA<br />TODAS.</span>
-        </div>
-        <div class="master-copy">
-          <p class="eyebrow">04 / LA LLAVE MAESTRA</p>
-          <h2>Lee mejor.<br /><em>Aprende todo lo demás más rápido.</em></h2>
-          <p>${esc(course.short)} Es nuestro curso propio y el punto de partida de cualquier habilidad.</p>
-          <ul class="check-list">${course.promises.map((p, i) => `<li><span>0${i + 1}</span> ${esc(p)}</li>`).join("")}</ul>
-          <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "La compra se abrirá cuando el curso esté listo."}</p></div>
-          <div class="master-actions">
-            <a class="btn btn-lime" href="/tienda/curso-lectura-rapida/" id="master-cta">Conoce el curso <span aria-hidden="true">↗</span></a>
-          </div>
-          <p class="fine">${esc(course.limits)}</p>
-        </div>
-      </section>
-
-      <section class="shop-teaser section-pad" id="tienda">
-        <div class="section-top">
-          <p class="eyebrow">05 / LA TIENDA</p>
-          <a class="section-index text-link" href="/tienda/">VER TODO ↗</a>
-        </div>
-        <div class="section-heading">
-          <h2>Libros y gadgets<br /><em>que sí vas a usar.</em></h2>
-          <p>Cada recomendación tiene un porqué: a quién sirve, qué habilidad entrena y qué puedes hacer con ella.</p>
-        </div>
-        <div class="product-rail">${shopItems}</div>
-        <p class="fine shop-disclaimer">${esc(affiliateNote())}</p>
-      </section>
-
-      <section class="lab-teaser section-pad" id="laboratorio-teaser">
-        <div class="lab-teaser-peter"><img src="/assets/peter-explaining-v1.webp" alt="Peter explica el laboratorio con una pata levantada" width="1254" height="1254" loading="lazy" /></div>
-        <div class="lab-teaser-copy">
-          <p class="eyebrow">06 / GRATIS · SIN REGISTRO</p>
-          <h2>Prueba el método<br /><em>en diez minutos.</em></h2>
-          <p>Un cuaderno de siete días para pasar de una lectura a una acción. Tus notas se quedan en tu navegador.</p>
-          <a class="btn btn-lime" href="/laboratorio/" id="lab-cta">Abre el laboratorio <span aria-hidden="true">↗</span></a>
-        </div>
-      </section>
-
-      <section class="peter section-pad" id="peter">
-        <div class="peter-portrait"><img src="/assets/peter-explaining-v1.webp" alt="Peter, el personaje de LectorLab, sostiene su libro y levanta una pata para explicar una idea" width="1254" height="1254" loading="lazy" /></div>
-        <div class="peter-copy">
-          <p class="eyebrow">LECTORLAB ES LA MARCA. PETER, TU COMPAÑERO.</p>
-          <h2>Peter también<br /><em>está aprendiendo.</em></h2>
-          <p>Curioso, un poco escéptico y sin respuestas mágicas. Peter prueba lo que lee: a veces sale bien y a veces no, y siempre cuenta qué aprendió.</p>
-          <p>Detrás de LectorLab está Nicolás, su creador. Peter pone la curiosidad. Las habilidades las construimos leyendo y practicando.</p>
-          <a href="#habilidades" class="text-link">Vuelve a las habilidades <span aria-hidden="true">↗</span></a>
-        </div>
-        <span class="peter-stamp" aria-hidden="true">SIEMPRE<br />EN MODO<br />APRENDIZ.</span>
-      </section>
-
-      <section class="faq section-pad" id="faq">
-        <div><p class="eyebrow">SIN LETRA PEQUEÑA</p><h2>Eso que<br /><em>te preguntas.</em></h2></div>
-        <div class="faq-items">
-          <details><summary>¿De verdad se puede aprender cualquier habilidad leyendo?</summary><p>Leer te da el mapa: lo que otros descubrieron, sus errores y sus métodos. La práctica te lleva por el camino. Por eso cada habilidad incluye un ejercicio para empezar hoy.</p></details>
-          <details><summary>¿LectorLab vende libros?</summary><p>Recomendamos libros y gadgets que se compran en tiendas externas. ${isAffiliate() ? "Algunos enlaces son de afiliado y pueden generarnos una comisión sin coste para ti." : ""} Nuestro producto propio es el curso de lectura rápida y estratégica.</p></details>
-          <details><summary>¿La lectura rápida funciona?</summary><p>Leer más rápido suele tener un coste en comprensión. Por eso no prometemos cifras de palabras por minuto: enseñamos a ajustar la velocidad a tu objetivo, a saltar lo que ya sabes y a frenar donde está lo importante.</p></details>
-          <details><summary>¿Cuándo puedo comprar el curso?</summary><p>${course.checkoutUrl ? "Ya está disponible desde su página." : "Estamos terminando el curso. El temario propuesto ya está publicado y la compra se abrirá cuando esté listo."}</p></details>
-          <details><summary>¿Los libros tienen todas las respuestas?</summary><p>No. Contienen perspectivas valiosas y también errores o límites. Leer no sustituye la ayuda profesional cuando una situación la requiere.</p></details>
-        </div>
-      </section>
-
-      <section class="closing section-pad">
-        <p class="eyebrow">LA PRÓXIMA HABILIDAD NO SE VA A LEER SOLA.</p>
-        <h2>Abre un libro.<br /><em>Aprende algo.</em><span aria-hidden="true">↗</span></h2>
-        <a class="btn" href="#habilidades" id="closing-cta">Elige tu habilidad <span aria-hidden="true">↗</span></a><span class="closing-note">LEE. APRENDE. HAZLO.</span>
-      </section>`;
-
-  return {
-    path: "index.html",
-    html: layout({
-      title: "LectorLab — La lectura construye habilidades",
-      description:
-        "Aprende a hablar en público, vender, negociar o pensar como un científico leyendo. Libros recomendados por habilidad, gadgets de lectura y un curso de lectura rápida y estratégica.",
-      path: "/",
-      entry: "/src/main.js",
-      page: "home",
-      body,
-    }),
-  };
-}
-
-/* ================================================================== */
-/* HABILIDADES · HUB                                                   */
+/* HABILIDADES                                                         */
 /* ================================================================== */
 function skillsHub() {
   const spines = skills
@@ -249,7 +33,7 @@ function skillsHub() {
         <div class="page-hero-grid">
           <div>
             <p class="eyebrow">LA BIBLIOTECA DE HABILIDADES</p>
-            <h1 class="page-title">Todo se puede<br /><em>aprender leyendo.</em></h1>
+            <h1 class="page-title">Lee una idea.<br /><em>Entrena una habilidad.</em></h1>
             <p class="page-lead">Elige un lomo de la estantería. Cada habilidad incluye los libros que recomendamos, por qué leerlos y un ejercicio para empezar hoy.</p>
           </div>
           <div class="shelf" aria-label="Estantería de habilidades">
@@ -312,7 +96,7 @@ function skillPage(s, idx) {
             </div>
           </div>
           <div class="skill-token-wrap">
-            <div class="skill-scene-3d" id="skill-scene" data-skill-icon="${s.icon}" data-skill-color="${s.color}" aria-label="Tótem 3D interactivo de ${esc(s.name)}">
+            <div class="skill-scene-3d" id="skill-scene" role="group" data-skill-icon="${s.icon}" data-skill-color="${s.color}" aria-label="Tótem 3D interactivo de ${esc(s.name)}">
               <div class="skill-scene-fallback skill-token skill-token--${s.color}" data-tilt>
                 <span class="skill-token-num">${s.num}</span>
                 ${icon(s.icon, "skill-token-icon")}
@@ -321,7 +105,7 @@ function skillPage(s, idx) {
             </div>
             <p class="viewer-hint" aria-hidden="true">Arrastra el tótem para girarlo ↻</p>
             <figure class="peter-quote">
-              <img src="/assets/peter-explaining-v1.webp" alt="Peter comenta esta habilidad" width="1254" height="1254" loading="lazy" />
+              <img src="/assets/peter-curious.webp" alt="Peter comenta esta habilidad" width="1254" height="1254" loading="lazy" />
               <blockquote>«${esc(s.peter)}»</blockquote>
               <figcaption>— Peter</figcaption>
             </figure>
@@ -383,10 +167,11 @@ function skillPage(s, idx) {
 /* TIENDA                                                              */
 /* ================================================================== */
 function shop() {
-  const items = [...books, ...gadgets];
+  const items = [notebooks, ...books, ...gadgets];
   const typeFilters = [
     ["all", "Todo"],
     ["course", "Cursos"],
+    ["notebook", "Cuadernos"],
     ["book", "Libros"],
     ["gadget", "Gadgets"],
   ]
@@ -401,7 +186,7 @@ function shop() {
             <p class="eyebrow">LA TIENDA DE LECTORLAB</p>
             <h1 class="page-title">La tienda del lector<br /><em>que aprende haciendo.</em></h1>
           </div>
-          <p class="page-lead">Un curso propio para leer mejor, libros elegidos por habilidad y gadgets que hacen más fácil leer cada día.</p>
+          <p class="page-lead">Cuadernos para acompañar tu lectura, un curso en desarrollo, libros por habilidad y accesorios para crear tu rincón lector.</p>
         </div>
       </section>
 
@@ -412,7 +197,7 @@ function shop() {
             <p class="eyebrow">${esc(course.kicker)} · PRODUCTO PROPIO</p>
             <h2 id="featured-title">${esc(course.title)}</h2>
             <p>${esc(course.short)}</p>
-            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único." : "Compra próximamente."}</p></div>
+            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único." : "Precio previsto de lanzamiento. Curso en desarrollo; venta no abierta."}</p></div>
             <a class="btn" href="/tienda/curso-lectura-rapida/">Ver el curso <span aria-hidden="true">↗</span></a>
           </div>
         </article>
@@ -425,7 +210,7 @@ function shop() {
           <label class="filter-select"><span>Habilidad</span>
             <select id="filter-skill"><option value="all">Todas</option>${skillOptions}</select>
           </label>
-          <p class="filter-count" id="filter-count" role="status" aria-live="polite">${items.length} productos</p>
+          <p class="filter-count" id="filter-count" role="status" aria-live="polite">${items.length + 1} productos</p>
         </div>
         <div class="product-grid" id="product-grid">${items.map((p) => productCard(p)).join("")}</div>
         <p class="filter-empty" id="filter-empty" hidden>No hay productos con esos filtros todavía. <button type="button" class="text-link" id="filter-reset">Ver todo</button></p>
@@ -467,12 +252,12 @@ function coursePage() {
             <h1 class="page-title">Lectura rápida<br /><em>y estratégica.</em></h1>
             <p class="page-lead">${esc(course.short)}</p>
             <ul class="check-list">${course.promises.map((p, i) => `<li><span>0${i + 1}</span> ${esc(p)}</li>`).join("")}</ul>
-            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "La compra se abrirá cuando el curso esté listo."}</p></div>
+            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "Precio previsto de lanzamiento. Curso en desarrollo; venta no abierta."}</p></div>
             <div class="hero-actions">${courseCta()}</div>
           </div>
           <div class="course-viewer-wrap">
             <div class="course-scene course-scene--large" id="course-scene" aria-hidden="true">${courseBox()}</div>
-            <p class="viewer-hint" aria-hidden="true">Arrastra para girar ↻</p>
+            <p class="viewer-hint" aria-hidden="true">Arrastra para girar · representación digital del curso</p>
           </div>
         </div>
       </section>
@@ -492,7 +277,7 @@ function coursePage() {
           <p>${esc(course.limits)}</p>
         </div>
         <figure class="peter-quote peter-quote--large">
-          <img src="/assets/peter-reading-v2.webp" alt="" width="1254" height="1254" loading="lazy" />
+          <img src="/assets/peter-portrait.webp" alt="" width="1254" height="1254" loading="lazy" />
           <blockquote>«${esc(course.peterNote)}»</blockquote>
           <figcaption>— Peter</figcaption>
         </figure>
@@ -558,7 +343,7 @@ function lab() {
         <div class="section-heading"><h2>Deja de guardarlo.<br /><em>Empieza a usarlo.</em></h2><p>Elige una pregunta. Dedícale diez minutos.<br />Escribe lo que descubras y llévatelo contigo.</p></div>
         <div class="workbook">
           <aside class="workbook-sidebar">
-            <div class="peter-guide"><img src="/assets/peter-explaining-v1.webp" alt="Peter presenta el cuaderno" width="1254" height="1254" loading="lazy" /><p>Una pregunta cada vez.<br /><strong>Yo te acompaño.</strong></p></div>
+            <div class="peter-guide"><img src="/assets/peter-curious.webp" alt="Peter presenta el cuaderno" width="1254" height="1254" loading="lazy" /><p>Una pregunta cada vez.<br /><strong>Yo te acompaño.</strong></p></div>
             <p class="eyebrow">TU CUADERNO · MUESTRA DE 7 DÍAS</p>
             <h3>De la idea<br />a la acción.</h3>
             <label for="topic">Elige tu punto de partida</label><select id="topic"><option value="money">Dinero con criterio</option><option value="relations">Relaciones y deseo</option><option value="attention">Atención y hábitos</option></select>
@@ -619,7 +404,7 @@ function affiliates() {
               : "En esta versión los enlaces no generan comisión. Si en el futuro lo hacen, lo indicaremos en cada ficha y en esta página."
           }</p>
           <p>Elegimos las recomendaciones por lo que enseñan, no por la comisión. No publicamos reseñas inventadas ni precios que no podamos mantener actualizados.</p>
-          <p>Nuestro producto propio es el curso de lectura rápida y estratégica. Las portadas de libros son interpretaciones gráficas de LectorLab, no las portadas editoriales.</p>
+          <p>Nuestros productos propios son los cuadernos de lectura (edición de prueba) y el curso de lectura rápida y estratégica (en desarrollo). La venta aún no está abierta. Los libros destacados muestran las portadas de sus ediciones enlazadas. El resto de portadas tipográficas son interpretaciones gráficas de LectorLab.</p>
           <a class="text-link" href="/tienda/">Volver a la tienda ↗</a>
         </div>
       </section>`;
@@ -658,5 +443,13 @@ function notFound() {
 }
 
 export function allPages() {
-  return [home(), skillsHub(), ...skills.map(skillPage), shop(), coursePage(), lab(), affiliates(), notFound()];
+  return [home(), notebooksPage(), skillsHub(), ...skills.map(skillPage), shop(), coursePage(), lab(), affiliates(), notFound()];
+}
+
+function notebooksPage() {
+  const body = `<section class="page-hero notebook-hero section-pad">
+    <nav class="crumbs" aria-label="Migas"><a href="/">Inicio</a><span>/</span><a href="/tienda/">Tienda</a><span>/</span><span aria-current="page">Cuadernos</span></nav>
+    <div class="page-hero-grid"><div><p class="eyebrow">EL PODER DE ENTENDER · EDICIÓN DE PRUEBA</p><h1 class="page-title">Lee y<br><em>hazlo tuyo.</em></h1><p class="page-lead">${esc(notebooks.short)}</p><div class="price"><strong>${esc(notebooks.price)}</strong><p>${esc(notebooks.priceNote)}. Venta aún no abierta.</p></div><a class="btn" href="/laboratorio/">Prueba el laboratorio gratis ↗</a></div><div class="notebook-display">${notebookBox()}</div></div>
+  </section><section class="section-pad notebook-includes"><div class="section-heading"><h2>Dos cuadernos.<br><em>Tu propia forma de leer.</em></h2><p>60 páginas en total, en PDF para imprimir o anotar con una aplicación compatible. No son formularios interactivos. El libro de lectura se consigue por separado.</p></div><div class="module-list">${notebooks.includes.map(([t,d],i)=>`<article class="module"><span class="module-num">0${i+1}</span><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join('')}</div><div class="notebook-details"><h3>Qué necesitas</h3><p>Tu libro, lápiz y un poco de curiosidad. Los cuadernos están preparados para imprimir en A4, a doble cara y con giro por el borde largo. Puedes repetir o adaptar las propuestas.</p><h3>Qué puedes probar hoy</h3><p>El laboratorio web es un ejercicio gratuito de siete días para conocer nuestro enfoque. Tiene su propio recorrido: no es una reproducción de estos PDF ni exige completar el pack.</p><a class="text-link" href="/laboratorio/">Abre el laboratorio ↗</a></div></section>`;
+  return {path:"tienda/cuadernos-lectorlab/index.html",html:layout({title:"Cuadernos LectorLab — Lee y hazlo tuyo",description:notebooks.short,path:"/tienda/cuadernos-lectorlab/",body,entry:"/src/site.js",page:"notebooks",active:"shop"})};
 }
