@@ -54,13 +54,13 @@ try {
         }
       }
     }
-    console.log(`CHECKED: 15 pages at ${width}px; ${layoutIssues.filter(x=>x.width===width).length} layout issues.`);
+    console.log(`CHECKED: ${allPages().length} pages at ${width}px; ${layoutIssues.filter(x=>x.width===width).length} layout issues.`);
   }
   await writeFile('tmp/qa/layout.json',JSON.stringify(layoutIssues,null,2));
   console.log(JSON.stringify({layoutIssues}));
   await page.setViewportSize({width:1440,height:1000});
   await page.emulateMedia({reducedMotion:'reduce'});
-  for(const path of ['/','/tienda/','/tienda/curso-lectura-rapida/','/tienda/cuadernos-lectorlab/','/laboratorio/','/habilidades/comunicar/']) {
+  for(const path of ['/','/tienda/','/tienda/curso-lectura-rapida/','/tienda/cuadernos-lectorlab/','/laboratorio/','/laboratorio/mesa/','/habilidades/comunicar/']) {
     await page.goto(base+path,{waitUntil:'networkidle'});
     const result=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
     for(const v of result.violations) accessibility.push({path,id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))});
@@ -95,6 +95,31 @@ try {
   const download=page.waitForEvent('download');await page.locator('#export').click();assert.ok((await download).suggestedFilename().endsWith('.txt'));
   await page.locator('#reset').click();await page.locator('button[value="cancel"]').click();
   console.log('PASS: notebook input, real storage/reload, route isolation, navigation, export and cancel.');
+  await page.goto(base+'/laboratorio/mesa/',{waitUntil:'networkidle'});
+  await page.locator('#new').click();
+  await page.locator('#title').fill('Mi primera prueba en la plataforma');
+  await page.locator('#question').fill('¿Qué pregunta falta en la reunión?');
+  await page.locator('#contrast').fill('Preguntar puede revelar restricciones; no garantiza acuerdos.');
+  await page.locator('#experiment summary').click();
+  await page.locator('#action').fill('Preguntar antes de proponer.');
+  await page.locator('#cue').fill('Al revisar el calendario mañana.');
+  await page.locator('#stage').selectOption('2');
+  await page.locator('#stage').selectOption('3');
+  assert.equal(await page.locator('#stage').inputValue(),'2');
+  await page.locator('#review').fill('Apareció una entrega que no conocía.');
+  await page.locator('#stage').selectOption('3');
+  await page.locator('summary').filter({hasText:'Guardar, llevarme'}).click();
+  await page.locator('#remember').check();
+  await page.reload({waitUntil:'networkidle'});
+  assert.equal(await page.locator('#review').inputValue(),'Apareció una entrega que no conocía.');
+  assert.equal(await page.locator('#stage').inputValue(),'3');
+  await page.locator('summary').filter({hasText:'Guardar, llevarme'}).click();
+  const platformDownload=page.waitForEvent('download');await page.locator('#json').click();assert.ok((await platformDownload).suggestedFilename().endsWith('.json'));
+  await page.locator('#import').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from('{}')});
+  await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('No se ha importado'));
+  assert.equal(await page.locator('#board .idea-card').count(),1);
+  await page.screenshot({path:'tmp/qa/platform-desktop.png',fullPage:true});
+  console.log('PASS: public platform creation, stage validation, review, persistence, backup and rejected import.');
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.goto(base+'/tienda/curso-lectura-rapida/',{waitUntil:'networkidle'});
   await page.waitForFunction(()=>document.querySelector('#course-scene canvas'));
