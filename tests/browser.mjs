@@ -81,9 +81,11 @@ try {
   assert.equal(await page.locator('[data-filter-type="course"]').getAttribute('aria-pressed'),'true');
   console.log('PASS: product filters, empty state, reset, course visibility and URL reload.');
   await page.goto(base+'/laboratorio/',{waitUntil:'networkidle'});
+  await page.locator('.legacy-lab > summary').click();
   await page.locator('#note').fill('Una pregunta para probar el flujo real.');
   await page.locator('#remember').check();
   await page.reload({waitUntil:'networkidle'});
+  await page.locator('.legacy-lab > summary').click();
   assert.equal(await page.locator('#note').inputValue(),'Una pregunta para probar el flujo real.');
   await page.locator('#complete').check();
   await page.locator('#next-day').click();

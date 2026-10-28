@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4173",
     "check": "for f in src/*.js src/data/*.js scripts/*.mjs scripts/site/*.mjs; do node --check \"$f\" || exit 1; done",
-    "test": "node tests/notebook.cjs && node tests/catalog.mjs",
+    "test": "node tests/notebook.cjs && node tests/catalog.mjs && node tests/learning-core.mjs",
     "test:browser": "node tests/browser.mjs"
   },
   "dependencies": {

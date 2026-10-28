@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 /**
- * Visor 3D del curso «Lectura rápida y estratégica»: una caja-libro que se gira
+ * Visor 3D del curso «Lectura estratégica»: una caja-libro que se gira
  * arrastrando y que se inclina ligeramente con el puntero. Render bajo demanda.
  *
  * @param {HTMLElement} container
@@ -53,7 +53,7 @@ export function createCourseViewer(container, gsap) {
     c.fillText("lectorlab / curso 01", 60, 90);
     c.fillRect(60, 125, w - 120, 2);
     c.font = "700 118px Space, sans-serif";
-    ["LECTURA", "RÁPIDA", "Y ESTRA-", "TÉGICA."].forEach((l, i) => c.fillText(l, 54, 290 + i * 112));
+    ["LECTURA", "CON", "INTEN-", "CIÓN."].forEach((l, i) => c.fillText(l, 54, 290 + i * 112));
     c.font = "italic 400 64px Instrument, serif";
     c.fillText("Lee mejor. Aprende todo.", 60, 820);
     c.font = "600 24px Space, sans-serif";

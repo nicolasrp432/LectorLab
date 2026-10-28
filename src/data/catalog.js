@@ -190,28 +190,28 @@ export const course = {
   id: "curso-lectura-rapida",
   type: "course",
   slug: "curso-lectura-rapida",
-  title: "Lectura rápida y estratégica",
+  title: "Lectura estratégica",
   kicker: "CURSO LECTORLAB · 01",
   skills: ["leer-mejor"],
   short:
-    "Aprende a leer con un objetivo, avanzar más rápido por lo que ya sabes y recordar lo que importa.",
+    "Seis módulos escritos para elegir, comprender, recordar y poner a prueba lo que lees.",
   price: "49 €",
   priceNote: "Precio previsto de lanzamiento · pago único",
-  status: "En desarrollo",
+  status: "Edición escrita en validación",
   checkoutUrl: "", // URL de Hotmart / Lemon Squeezy / Stripe
   peterNote: "No se trata de leer a toda velocidad. Se trata de saber dónde frenar.",
   modules: [
     ["Lee con un objetivo", "Define qué quieres sacar de un libro antes de abrirlo."],
     ["Previsualiza en 10 minutos", "Índice, introducción y conclusiones para decidir dónde invertir tu tiempo."],
-    ["Menos relecturas", "Técnicas de guía visual y ritmo para avanzar sin volver atrás a cada línea."],
-    ["Lectura selectiva", "Escanear, saltar con criterio y frenar donde está lo nuevo."],
+    ["Lee, recuerda y contrasta", "Explica una idea sin mirar y vuelve al texto para corregirla."],
+    ["Planifica con margen", "Estima sesiones con tu texto real y reserva tiempo para comprender."],
     ["Recordar lo leído", "Práctica de recuperación: cierra el libro y explícalo con tus palabras."],
     ["Tu sistema de lectura", "Notas, repaso y cómo convertir un libro en una habilidad aplicada."],
   ],
   promises: [
-    "Leer más rápido lo que no necesitas leer despacio",
+    "Elegir una profundidad de lectura acorde con tu pregunta",
     "Decidir en minutos si un libro merece tu tiempo",
-    "Recordar y aplicar más de lo que lees",
+    "Practicar el recuerdo y diseñar una prueba pequeña",
   ],
   limits:
     "Leer más rápido suele tener un coste en comprensión. Este curso no promete cifras de palabras por minuto: enseña a ajustar la velocidad a tu objetivo.",
@@ -221,12 +221,14 @@ export const course = {
 export const notebooks = {
   id: "cuadernos-lectorlab", type: "notebook", slug: "cuadernos-lectorlab",
   title: "Lee y hazlo tuyo", subtitle: "El pack de cuadernos LectorLab",
-  price: "19 €", priceNote: "Precio previsto del pack · pago único", checkoutUrl: "",
-  status: "Edición de prueba", skills: ["leer-mejor", "foco-y-habitos"],
-  short: "Dos cuadernos para comprender una lectura y encontrar espacio para volver a ella.",
+  price: "19 €", priceNote: "Precio del pack · pago único", checkoutUrl: "",
+  status: "Contenido preparado", skills: ["leer-mejor", "foco-y-habitos"],
+  short: "Dos cuadernos y un espacio interactivo para comprender, probar y volver a tus ideas.",
   includes: [
-    ["Lee y hazlo tuyo", "34 páginas · antes, durante y después de leer. Preguntas, recuperación de ideas y espacio para conectar lo aprendido."],
-    ["Vuelve al libro", "26 páginas · 28 propuestas flexibles para hacer sitio a la lectura. Sin rachas obligatorias ni deuda de páginas."]
+    ["Lee y hazlo tuyo", "19 páginas · preguntas, recuerdo, contraste y pruebas. A5 imprimible y A4 rellenable."],
+    ["Vuelve al libro", "14 páginas · señales, entorno y regreso a la lectura. A5 imprimible y A4 rellenable."],
+    ["Mi laboratorio", "Espacio web local: tablero, revisión de ideas, copias JSON, notas Markdown y tarjetas para Anki."],
+    ["Empieza y vuelve", "Guía de inicio en diez minutos y plantillas Markdown para importar en Notion o abrir en Obsidian."]
   ],
 };
 
