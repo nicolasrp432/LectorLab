@@ -167,7 +167,7 @@ export function courseBox() {
   return `<div class="course-box" aria-hidden="true">
         <div class="course-face course-front">
           <span>lectorlab / curso 01</span>
-          <strong>LECTURA<br />RÁPIDA<br />Y ESTRA-<br />TÉGICA.</strong>
+          <strong>LECTURA<br />CON<br />INTEN-<br />CIÓN.</strong>
           <small>${course.modules.length} MÓDULOS · A TU RITMO</small>
         </div>
         <div class="course-face course-spine"><span>LECTORLAB ✳ LEER MEJOR</span></div>
@@ -237,5 +237,5 @@ export function sectionIntro(kicker, title, copy, link = "") {
 
 export function ownProduct(item) {
   const isCourse = item.type === "course";
-  return `<article class="own-product ${isCourse ? "own-course" : "own-notebook"}"><a class="own-visual" href="${productUrl(item)}" aria-label="Ver ${esc(item.title)}">${isCourse ? courseBox() : notebookBox()}</a><div class="own-copy"><p class="eyebrow">${isCourse ? "CURSO ONLINE · EN DESARROLLO" : "2 CUADERNOS PDF · EDICIÓN DE PRUEBA"}</p><h3>${esc(item.title)}</h3><p>${esc(item.short)}</p><div class="own-price"><strong>${esc(item.price)}</strong><span>${esc(item.priceNote)}</span></div><a class="text-link" href="${productUrl(item)}">${isCourse ? "Descubre el temario" : "Qué incluyen los cuadernos"} ↗</a><p class="availability">Venta aún no abierta.</p></div></article>`;
+  return `<article class="own-product ${isCourse ? "own-course" : "own-notebook"}"><a class="own-visual" href="${productUrl(item)}" aria-label="Ver ${esc(item.title)}">${isCourse ? courseBox() : notebookBox()}</a><div class="own-copy"><p class="eyebrow">${isCourse ? "CURSO ESCRITO · EN VALIDACIÓN" : "CUADERNOS + ESPACIO INTERACTIVO"}</p><h3>${esc(item.title)}</h3><p>${esc(item.short)}</p><div class="own-price"><strong>${esc(item.price)}</strong><span>${esc(item.priceNote)}</span></div><a class="text-link" href="${productUrl(item)}">${isCourse ? "Descubre el temario" : "Qué incluyen los cuadernos"} ↗</a><p class="availability">Venta aún no abierta.</p></div></article>`;
 }

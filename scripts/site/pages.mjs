@@ -1,3 +1,4 @@
+import { samples } from "../../src/data/lab-scenes.js";
 import { home } from "./home.mjs";
 /**
  * Plantillas de página. Cada función devuelve { path, html }.
@@ -65,7 +66,7 @@ function courseBand() {
   return `<section class="course-band section-pad">
         <div>
           <p class="eyebrow">LA LLAVE MAESTRA</p>
-          <h2>¿Quieres leer estos libros<br /><em>más rápido y recordar más?</em></h2>
+          <h2>¿Quieres leer estos libros<br /><em>con intención y criterio?</em></h2>
         </div>
         <div class="course-band-actions">
           <p>${esc(course.short)}</p>
@@ -197,7 +198,7 @@ function shop() {
             <p class="eyebrow">${esc(course.kicker)} · PRODUCTO PROPIO</p>
             <h2 id="featured-title">${esc(course.title)}</h2>
             <p>${esc(course.short)}</p>
-            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único." : "Precio previsto de lanzamiento. Curso en desarrollo; venta no abierta."}</p></div>
+            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único." : "Precio previsto. Edición escrita en validación; venta no abierta."}</p></div>
             <a class="btn" href="/tienda/curso-lectura-rapida/">Ver el curso <span aria-hidden="true">↗</span></a>
           </div>
         </article>
@@ -219,8 +220,8 @@ function shop() {
   return {
     path: "tienda/index.html",
     html: layout({
-      title: "Tienda — Curso de lectura rápida, libros y gadgets | LectorLab",
-      description: "Curso de lectura rápida y estratégica, libros recomendados por habilidad y gadgets de lectura. Elige qué quieres aprender y empieza.",
+      title: "Tienda — Curso de lectura estratégica, libros y gadgets | LectorLab",
+      description: "Curso de lectura estratégica, libros recomendados por habilidad y gadgets de lectura. Elige qué quieres aprender y empieza.",
       path: "/tienda/",
       entry: "/src/site.js",
       active: "shop",
@@ -249,10 +250,10 @@ function coursePage() {
         <div class="page-hero-grid">
           <div>
             <p class="eyebrow">${esc(course.kicker)} · LA LLAVE MAESTRA</p>
-            <h1 class="page-title">Lectura rápida<br /><em>y estratégica.</em></h1>
-            <p class="page-lead">${esc(course.short)}</p>
+            <h1 class="page-title">Lectura<br /><em>estratégica.</em></h1>
+            <p class="page-lead">${esc(course.short)}</p><p>Manual de 16 páginas, prácticas con criterios de contraste, planificador y temporizador. No incluye vídeos ni tutoría; no necesitas comprar el pack para seguirlo.</p>
             <ul class="check-list">${course.promises.map((p, i) => `<li><span>0${i + 1}</span> ${esc(p)}</li>`).join("")}</ul>
-            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "Precio previsto de lanzamiento. Curso en desarrollo; venta no abierta."}</p></div>
+            <div class="price"><strong>${esc(priceLabel())}</strong><p>${course.checkoutUrl ? "Pago único. Acceso a tu ritmo." : "Precio previsto. Edición escrita en validación; venta no abierta."}</p></div>
             <div class="hero-actions">${courseCta()}</div>
           </div>
           <div class="course-viewer-wrap">
@@ -291,8 +292,8 @@ function coursePage() {
   return {
     path: "tienda/curso-lectura-rapida/index.html",
     html: layout({
-      title: "Curso de lectura rápida y estratégica — LectorLab",
-      description: "Aprende a leer con un objetivo, avanzar más rápido por lo que ya sabes y recordar lo que importa. Curso práctico de LectorLab.",
+      title: "Curso de lectura estratégica — LectorLab",
+      description: "Seis módulos escritos para elegir, comprender, recordar y poner a prueba lo que lees. Curso práctico de LectorLab.",
       path: "/tienda/curso-lectura-rapida/",
       entry: "/src/site.js",
       active: "course",
@@ -315,9 +316,22 @@ function lab() {
             <p class="eyebrow">GRATIS · SIN REGISTRO</p>
             <h1 class="page-title">El laboratorio.<br /><em>De la idea a la acción.</em></h1>
           </div>
-          <p class="page-lead">Elige una pregunta, abre una lectura y pon una idea a prueba durante siete días. Tus notas no salen de tu navegador.</p>
+          <p class="page-lead">Prueba el método con una escena breve. Recuerda una idea, contrástala y elige cómo usarla. Sin libro, cuenta ni descarga obligatoria.</p>
         </div>
       </section>
+      <section class="quick-lab section-pad" id="quick-lab" aria-label="Tu primera prueba">
+        <div class="quick-grid">
+          <div class="quick-intro"><p class="eyebrow">TU PRIMERA VICTORIA · UNOS 3 MINUTOS</p><h2>Una idea.<br /><em>Un pequeño cambio.</em></h2><img src="/assets/peter-reading-cutout.webp" alt="Peter lee contigo" width="850" height="1062" /><p>Peter te acompaña: lee una escena, cierra el texto y decide qué merece una prueba en tu vida.</p><p class="fine">Escenas originales de LectorLab. No son extractos de libros ni pruebas de capacidad.</p></div>
+          <div class="quick-card"><noscript><p>Activa JavaScript para usar la prueba guiada. También puedes leer la escena y responder en papel: ¿qué recuerdas?, ¿qué matizarías?, ¿qué probarás y cuándo?</p></noscript><p id="quick-progress" class="eyebrow" tabindex="-1"></p>
+            <div data-step="0"><label for="quick-route">¿Qué te gustaría practicar?</label><select id="quick-route"><option value="comunicar">Comunicarme mejor</option><option value="habitos">Volver a leer</option><option value="foco">Cuidar mi atención</option></select><h3 id="quick-title">${esc(samples.comunicar.title)}</h3><p id="quick-text">${esc(samples.comunicar.text)}</p></div>
+            <div data-step="1" hidden><h3>¿Qué te has llevado?</h3><p id="quick-question"></p><label for="quick-recall">Recuerda sin mirar. Una frase basta.</label><textarea id="quick-recall" rows="3" maxlength="6000"></textarea><details id="quick-feedback"><summary>Ahora contrasta con la escena</summary><p id="quick-answer"></p><p class="fine">Es una respuesta orientativa. Puedes volver atrás para releer la escena completa.</p></details><label for="quick-contrast">¿Qué corregirías o matizarías?</label><textarea id="quick-contrast" rows="3" maxlength="6000"></textarea></div>
+            <div data-step="2" hidden><h3>Haz la prueba pequeña.</h3><p>Elige una acción reversible y bajo tu control. No hace falta cambiarlo todo.</p><label for="quick-action">¿Qué vas a probar?</label><textarea id="quick-action" rows="3" maxlength="6000"></textarea><label for="quick-cue">¿Cuándo y dónde?</label><textarea id="quick-cue" rows="2" maxlength="6000" placeholder="Al terminar de cenar, en la mesa…"></textarea><label for="quick-date">¿Cuándo quieres revisarlo? (opcional)</label><input type="date" id="quick-date" /></div>
+            <div data-step="3" hidden><h3>Ya tienes algo que probar.</h3><p class="quick-result" id="quick-summary"></p><p>Después, pregúntate: ¿qué ocurrió?, ¿qué no sé todavía?, ¿qué ajustaría? Si hoy no puedes, retómalo cuando tenga sentido.</p><div class="quick-actions"><button id="quick-md">Llevarme mis notas (.md)</button><button id="quick-json">Copia para el pack (.json)</button><button id="quick-calendar">Añadir revisión al calendario</button><button id="quick-print">Imprimir / guardar PDF</button></div><a class="text-link" href="/tienda/cuadernos-lectorlab/">Continúa con tus propios libros · pack 19 € ↗</a><p class="fine">Contenido preparado. La compra todavía no está habilitada.</p></div>
+            <div class="quick-actions"><button id="quick-prev">← Volver</button><button id="quick-next">Continuar →</button></div><label class="check-line"><input type="checkbox" id="quick-remember" /> Recordar esta prueba en este navegador</label><p class="fine">Opcional. No enviamos tus respuestas. Borrar los datos del navegador elimina la copia local; exporta para conservarla.</p><p id="quick-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+      <details class="legacy-lab"><summary>¿Quieres profundizar? Abre el cuaderno gratuito de siete sesiones o recupera tus notas anteriores.</summary>
       <section class="questions section-pad" id="rutas">
         <div class="section-top"><p class="eyebrow">01 / ALGO TE ESTÁ DANDO VUELTAS</p><span class="section-index">[ ELIGE TU PREGUNTA ]</span></div>
         <div class="route-tabs" role="tablist" aria-label="Temas de lectura">
@@ -364,7 +378,7 @@ function lab() {
           <div><label class="check-line"><input type="checkbox" id="remember" /> Guardar mis notas en este navegador</label><p class="fine">Opcional. No se envían a LectorLab. Exporta una copia antes de borrar datos.</p></div>
           <div class="export-actions"><button id="export" class="text-link">Descargar mis notas ↓</button><button id="reset" class="subtle-link">Borrar cuaderno</button></div>
         </div>
-      </section>`;
+      </section></details>`;
   const dialog = `<dialog id="reset-dialog">
       <form method="dialog">
         <p class="eyebrow">TU CUADERNO</p>
@@ -404,7 +418,7 @@ function affiliates() {
               : "En esta versión los enlaces no generan comisión. Si en el futuro lo hacen, lo indicaremos en cada ficha y en esta página."
           }</p>
           <p>Elegimos las recomendaciones por lo que enseñan, no por la comisión. No publicamos reseñas inventadas ni precios que no podamos mantener actualizados.</p>
-          <p>Nuestros productos propios son los cuadernos de lectura (edición de prueba) y el curso de lectura rápida y estratégica (en desarrollo). La venta aún no está abierta. Los libros destacados muestran las portadas de sus ediciones enlazadas. El resto de portadas tipográficas son interpretaciones gráficas de LectorLab.</p>
+          <p>Nuestros productos propios son el pack de cuadernos y herramientas (contenido preparado) y el curso de lectura estratégica (edición escrita en validación). La venta aún no está abierta. Los libros destacados muestran las portadas de sus ediciones enlazadas. El resto de portadas tipográficas son interpretaciones gráficas de LectorLab.</p>
           <a class="text-link" href="/tienda/">Volver a la tienda ↗</a>
         </div>
       </section>`;
@@ -449,7 +463,7 @@ export function allPages() {
 function notebooksPage() {
   const body = `<section class="page-hero notebook-hero section-pad">
     <nav class="crumbs" aria-label="Migas"><a href="/">Inicio</a><span>/</span><a href="/tienda/">Tienda</a><span>/</span><span aria-current="page">Cuadernos</span></nav>
-    <div class="page-hero-grid"><div><p class="eyebrow">EL PODER DE ENTENDER · EDICIÓN DE PRUEBA</p><h1 class="page-title">Lee y<br><em>hazlo tuyo.</em></h1><p class="page-lead">${esc(notebooks.short)}</p><div class="price"><strong>${esc(notebooks.price)}</strong><p>${esc(notebooks.priceNote)}. Venta aún no abierta.</p></div><a class="btn" href="/laboratorio/">Prueba el laboratorio gratis ↗</a></div><div class="notebook-display">${notebookBox()}</div></div>
-  </section><section class="section-pad notebook-includes"><div class="section-heading"><h2>Dos cuadernos.<br><em>Tu propia forma de leer.</em></h2><p>60 páginas en total, en PDF para imprimir o anotar con una aplicación compatible. No son formularios interactivos. El libro de lectura se consigue por separado.</p></div><div class="module-list">${notebooks.includes.map(([t,d],i)=>`<article class="module"><span class="module-num">0${i+1}</span><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join('')}</div><div class="notebook-details"><h3>Qué necesitas</h3><p>Tu libro, lápiz y un poco de curiosidad. Los cuadernos están preparados para imprimir en A4, a doble cara y con giro por el borde largo. Puedes repetir o adaptar las propuestas.</p><h3>Qué puedes probar hoy</h3><p>El laboratorio web es un ejercicio gratuito de siete días para conocer nuestro enfoque. Tiene su propio recorrido: no es una reproducción de estos PDF ni exige completar el pack.</p><a class="text-link" href="/laboratorio/">Abre el laboratorio ↗</a></div></section>`;
+    <div class="page-hero-grid"><div><p class="eyebrow">EL PODER DE ENTENDER · PACK COMPLETO</p><h1 class="page-title">Lee y<br><em>hazlo tuyo.</em></h1><p class="page-lead">${esc(notebooks.short)}</p><div class="price"><strong>${esc(notebooks.price)}</strong><p>${esc(notebooks.priceNote)}. Venta aún no abierta.</p></div><a class="btn" href="/laboratorio/">Prueba el laboratorio gratis ↗</a></div><div class="notebook-display">${notebookBox()}</div></div>
+  </section><section class="section-pad notebook-includes"><div class="section-heading"><h2>Dos cuadernos.<br><em>Tu propia forma de leer.</em></h2><p>Dos cuadernos, 33 páginas de contenido en dos formatos, y un espacio web para llevar tus ideas a la práctica. Elige papel o pantalla: no tienes que usarlo todo.</p></div><div class="module-list">${notebooks.includes.map(([t,d],i)=>`<article class="module"><span class="module-num">0${i+1}</span><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join('')}</div><div class="notebook-details"><h3>Qué necesitas</h3><p>Un libro al que tengas acceso y un navegador moderno o un visor de PDF compatible. El pack se entrega como ZIP: descomprímelo y abre la guía. El HTML funciona localmente; en móviles que solo muestran una vista previa puedes usar los PDFs. No requiere cuenta ni sincroniza entre dispositivos.</p><h3>Qué no incluye</h3><p>Libros de terceros, vídeos, tutoría, sincronización en la nube ni el curso de 49 € previstos. Tus notas se guardan solo si lo eliges; exporta una copia para conservarlas.</p><h3>Qué puedes probar hoy</h3><p>En unos tres minutos puedes leer una escena original, recordar una idea y elegir una prueba. Después puedes continuar con siete sesiones opcionales. La copia JSON de tu primera prueba se puede importar en el pack.</p><a class="text-link" href="/laboratorio/">Abre el laboratorio ↗</a></div></section>`;
   return {path:"tienda/cuadernos-lectorlab/index.html",html:layout({title:"Cuadernos LectorLab — Lee y hazlo tuyo",description:notebooks.short,path:"/tienda/cuadernos-lectorlab/",body,entry:"/src/site.js",page:"notebooks",active:"shop"})};
 }
