@@ -194,10 +194,10 @@ export const course = {
   kicker: "CURSO LECTORLAB · 01",
   skills: ["leer-mejor"],
   short:
-    "Seis módulos escritos para elegir, comprender, recordar y poner a prueba lo que lees.",
+    "Curso audiovisual en preparación: seis módulos para comprender, recordar y poner a prueba lo que lees.",
   price: "49 €",
   priceNote: "Precio previsto de lanzamiento · pago único",
-  status: "Edición escrita en validación",
+  status: "Producción audiovisual",
   checkoutUrl: "", // URL de Hotmart / Lemon Squeezy / Stripe
   peterNote: "No se trata de leer a toda velocidad. Se trata de saber dónde frenar.",
   modules: [
@@ -227,7 +227,7 @@ export const notebooks = {
   includes: [
     ["Lee y hazlo tuyo", "19 páginas · preguntas, recuerdo, contraste y pruebas. A5 imprimible y A4 rellenable."],
     ["Vuelve al libro", "14 páginas · señales, entorno y regreso a la lectura. A5 imprimible y A4 rellenable."],
-    ["Mi laboratorio", "Espacio web local: tablero, revisión de ideas, copias JSON, notas Markdown y tarjetas para Anki."],
+    ["Mi laboratorio", "Versión local del laboratorio gratuito: tablero, revisiones y exportaciones. También puedes usar la herramienta web sin comprar el pack."],
     ["Empieza y vuelve", "Guía de inicio en diez minutos y plantillas Markdown para importar en Notion o abrir en Obsidian."]
   ],
 };
